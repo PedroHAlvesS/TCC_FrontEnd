@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
-import { fetchOrders, fetchAdminProfile, fetchDeliveryMen } from '../services/dashboardService';
+import { fetchOrders, fetchAdminProfile, fetchDeliveryMen, assignOrderToDeliveryMan } from '../services/dashboardService';
 import { clearToken } from '../services/auth';
 
 export default function OrderDetails() {
@@ -50,6 +50,29 @@ export default function OrderDetails() {
     navigate('/admin', { replace: true });
   }
 
+  async function handleAssignOrder() {
+    if (!selectedDeliveryManId) {
+      setError('Selecione um entregador');
+      return;
+    }
+
+    setAssigning(true);
+    setError('');
+    setSuccessMessage('');
+
+    try {
+      await assignOrderToDeliveryMan(order.id, selectedDeliveryManId);
+      setSuccessMessage('Pedido atribuído ao entregador com sucesso!');
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 2000);
+    } catch (err) {
+      setError(err.message || 'Erro ao atribuir pedido ao entregador');
+    } finally {
+      setAssigning(false);
+    }
+  }
+
   if (loading) {
     return (
       <div className="page-shell dashboard-shell">
@@ -96,6 +119,32 @@ export default function OrderDetails() {
             </button>
           </div>
         </header>
+
+        {successMessage && (
+          <div className="success-banner">
+            <span>{successMessage}</span>
+            <button
+              type="button"
+              className="banner-close"
+              onClick={() => setSuccessMessage('')}
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
+        {error && (
+          <div className="error-banner">
+            <span>{error}</span>
+            <button
+              type="button"
+              className="banner-close"
+              onClick={() => setError('')}
+            >
+              ✕
+            </button>
+          </div>
+        )}
 
         <div className="order-details-grid">
           <section className="order-details-card">
@@ -147,7 +196,10 @@ export default function OrderDetails() {
             <div className="order-assign-box">
               <div className="order-assign-title">Atribuir Entregador</div>
               {order.status !== 'PENDING' ? (
-                <div className="order-assign-empty">Este pedido só pode ser atribuído quando estiver pendente.</div>
+                <div className="order-assign-empty">
+                  <strong>Entregador atribuído:</strong>
+                  <div>{order.deliveryManName || 'Nome do entregador não informado'}</div>
+                </div>
               ) : (
                 <>
                   <label className="order-assign-label">
@@ -167,6 +219,7 @@ export default function OrderDetails() {
                   <button
                     type="button"
                     className="primary-button"
+                    onClick={handleAssignOrder}
                     disabled={!selectedDeliveryManId || assigning}
                   >
                     {assigning ? 'Atribuindo...' : 'Atribuir Pedido ao Entregador'}

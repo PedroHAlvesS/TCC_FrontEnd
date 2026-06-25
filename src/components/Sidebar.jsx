@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 
 const sidebarItems = [
   { label: 'Dashboard', path: '/dashboard' },
-  { label: 'Entregadores', path: '#' },
-  { label: 'Clientes', path: '#' },
+  { label: 'Entregadores', path: '/entregadores' },
+  { label: 'Clientes', path: '/clientes' },
   { label: 'Relatórios', path: '#' },
 ];
 

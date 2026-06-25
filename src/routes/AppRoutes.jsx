@@ -3,8 +3,12 @@ import LoginPage from '../pages/LoginPage';
 import BlankPage from '../pages/BlankPage';
 import Dashboard from '../pages/Dashboard';
 import OrderDetails from '../pages/OrderDetails';
+import DeliveryManOrders from '../pages/DeliveryManOrders';
+import Customers from '../pages/Customers';
+import CustomerOrders from '../pages/CustomerOrders';
 import EditProfile from '../pages/EditProfile';
 import CreateProfile from '../pages/CreateProfile';
+import DeliveryMen from '../pages/DeliveryMen';
 import RequireAuth from './RequireAuth';
 
 export default function AppRoutes() {
@@ -16,6 +20,10 @@ export default function AppRoutes() {
         {/* protected routes */}
         <Route element={<RequireAuth />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/entregadores" element={<DeliveryMen />} />
+          <Route path="/entregadores/pedidos/:id" element={<DeliveryManOrders />} />
+          <Route path="/clientes" element={<Customers />} />
+          <Route path="/clientes/pedidos/:id" element={<CustomerOrders />} />
           <Route path="/pedidos/:id" element={<OrderDetails />} />
           <Route path="/admin/blank" element={<BlankPage />} />
           <Route path="/admin/edit" element={<EditProfile />} />
