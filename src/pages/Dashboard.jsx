@@ -9,6 +9,8 @@ export default function Dashboard() {
   const [admin, setAdmin] = useState(null);
   const [error, setError] = useState('');
   const [profileOpen, setProfileOpen] = useState(false);
+  const [filterStatus, setFilterStatus] = useState('PENDING');
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,7 +60,9 @@ export default function Dashboard() {
     delivered: orders.filter((order) => order.status === 'DELIVERED').length,
   };
 
-  const pendingOrders = orders.filter((order) => order.status === 'PENDING');
+  const filteredOrders = orders
+    .filter((order) => order.status === filterStatus)
+    .filter((order) => order.customerName.toLowerCase().includes(searchTerm.toLowerCase()));
 
   function handleLogout() {
     clearToken();
@@ -121,8 +125,33 @@ export default function Dashboard() {
         <section className="dashboard-orders">
           <div className="dashboard-orders-header">
             <div>
-              <h2>Pedidos não atribuídos</h2>
-              <p>Lista de pedidos que ainda estão com status PENDING.</p>
+              <h2>Pedidos</h2>
+              <p>Filtre por status ou pelo nome do cliente.</p>
+            </div>
+          </div>
+
+          <div className="dashboard-filter-row">
+            <div>
+              <label>
+                Status
+                <select value={filterStatus} onChange={(event) => setFilterStatus(event.target.value)}>
+                  <option value="PENDING">PENDING</option>
+                  <option value="ASSIGNED">ASSIGNED</option>
+                  <option value="IN_TRANSIT">IN_TRANSIT</option>
+                  <option value="DELIVERED">DELIVERED</option>
+                </select>
+              </label>
+            </div>
+            <div>
+              <label>
+                Buscar por nome
+                <input
+                  type="text"
+                  placeholder="Digite o nome do cliente"
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                />
+              </label>
             </div>
           </div>
 
@@ -138,8 +167,8 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {pendingOrders.map((order) => (
-                  <tr key={order.id}>
+                {filteredOrders.map((order) => (
+                  <tr key={order.id} onClick={() => navigate(`/pedidos/${order.id}`)} style={{ cursor: 'pointer' }}>
                     <td>#{order.id}</td>
                     <td>{order.customerName}</td>
                     <td>

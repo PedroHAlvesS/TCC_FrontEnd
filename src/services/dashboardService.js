@@ -41,4 +41,22 @@ export async function fetchAdminProfile() {
   return res.json().catch(() => null);
 }
 
-export default { fetchOrders, fetchAdminProfile };
+export async function fetchDeliveryMen() {
+  const token = getToken();
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/delivery-men`, {
+    headers: token
+      ? {
+          Authorization: `Bearer ${token}`,
+        }
+      : {},
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    throw new Error(data?.message || 'Erro ao obter entregadores');
+  }
+
+  return res.json().catch(() => null);
+}
+
+export default { fetchOrders, fetchAdminProfile, fetchDeliveryMen };

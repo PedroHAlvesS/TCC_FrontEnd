@@ -353,8 +353,135 @@ body {
   color: #64748b;
 }
 
+.dashboard-filter-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(240px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.dashboard-filter-row label {
+  display: grid;
+  gap: 10px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.dashboard-filter-row select,
+.dashboard-filter-row input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
 .dashboard-orders-table-wrapper {
   overflow: auto;
+}
+
+.page-actions-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 24px;
+}
+
+.secondary-button {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+  padding: 12px 18px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.order-details-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 24px;
+}
+
+.order-details-card,
+.order-assign-card {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+  padding: 28px;
+}
+
+.order-details-box,
+.order-assign-box {
+  display: grid;
+  gap: 24px;
+}
+
+.order-details-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.order-details-label {
+  display: block;
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.order-address-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+  display: grid;
+  gap: 8px;
+}
+
+.order-address-title {
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.order-assign-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.order-assign-box {
+  display: grid;
+  gap: 20px;
+}
+
+.order-assign-label {
+  display: grid;
+  gap: 10px;
+  color: #0f172a;
+}
+
+.order-assign-label select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.order-assign-empty {
+  padding: 20px;
+  border-radius: 20px;
+  background: #f8fafc;
+  color: #64748b;
+}
+
+.order-assign-footer {
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #fefce8;
+  color: #92400e;
 }
 
 .dashboard-orders-table {
