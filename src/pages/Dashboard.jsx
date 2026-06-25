@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Sidebar from '../components/Sidebar';
 import { fetchOrders, fetchAdminProfile } from '../services/dashboardService';
 import { clearToken } from '../services/auth';
-
-const sidebarItems = [
-  { label: 'Dashboard', active: true },
-  { label: 'Clientes', active: false },
-  { label: 'Entregadores', active: false },
-  { label: 'Relatórios', active: false },
-];
 
 export default function Dashboard() {
   const [orders, setOrders] = useState(null);
@@ -73,22 +67,7 @@ export default function Dashboard() {
 
   return (
     <div className="page-shell dashboard-shell">
-      <aside className="dashboard-sidebar">
-        <div className="sidebar-brand">RapidoJá</div>
-        <nav className="sidebar-nav">
-          {sidebarItems.map((item) => (
-            <button
-              key={item.label}
-              type="button"
-              className={`sidebar-item ${item.active ? 'active' : ''}`}
-              onClick={() => item.active && navigate('/dashboard')}
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
-      </aside>
-
+      <Sidebar activePath="/dashboard" />
       <div className="dashboard-main">
         <header className="dashboard-header">
           <div>
@@ -106,8 +85,12 @@ export default function Dashboard() {
             </button>
             {profileOpen && (
               <div className="profile-dropdown">
-                <button type="button" className="profile-dropdown-item">Editar Perfil</button>
-                <button type="button" className="profile-dropdown-item">Criar Novo Perfil</button>
+                <button type="button" className="profile-dropdown-item" onClick={() => navigate('/admin/edit')}>
+                  Editar Perfil
+                </button>
+                <button type="button" className="profile-dropdown-item" onClick={() => navigate('/admin/create')}>
+                  Criar Novo Perfil
+                </button>
                 <button type="button" className="profile-dropdown-item logout" onClick={handleLogout}>
                   Sair
                 </button>
