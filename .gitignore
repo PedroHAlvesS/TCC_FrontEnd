@@ -1,0 +1,4 @@
+# compile output
+/dist
+/node_modules
+/stryker-tmp
