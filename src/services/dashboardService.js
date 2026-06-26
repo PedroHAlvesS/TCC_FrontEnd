@@ -219,4 +219,45 @@ export async function fetchCustomerOrdersByEmail(email) {
   return res.json().catch(() => null);
 }
 
-export default { fetchOrders, fetchAdminProfile, fetchDeliveryMen, fetchCustomers, createDeliveryMan, updateDeliveryMan, deleteDeliveryMan, fetchDeliveryManOrders, fetchCustomerOrders, fetchCustomerOrdersByEmail, assignOrderToDeliveryMan };
+export async function fetchDeliveryManOrdersByEmail(email) {
+  const token = getToken();
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/orders/delivery-man/email/${encodeURIComponent(email)}`, {
+    headers: token
+      ? {
+          Authorization: `Bearer ${token}`,
+        }
+      : {},
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    throw new Error(data?.message || 'Erro ao obter pedidos do entregador');
+  }
+
+  return res.json().catch(() => null);
+}
+
+export async function updateDeliveryManOrderStatus(orderId, status, email) {
+  const token = getToken();
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/orders/${orderId}/status/${email}`, {
+    method: 'PUT',
+    headers: token
+      ? {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      : {
+          'Content-Type': 'application/json',
+        },
+    body: JSON.stringify({ status, email }),
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    throw new Error(data?.message || 'Erro ao atualizar status do pedido');
+  }
+
+  return res.json().catch(() => null);
+}
+
+export default { fetchOrders, fetchAdminProfile, fetchDeliveryMen, fetchCustomers, createDeliveryMan, updateDeliveryMan, deleteDeliveryMan, fetchDeliveryManOrders, fetchCustomerOrders, fetchCustomerOrdersByEmail, fetchDeliveryManOrdersByEmail, updateDeliveryManOrderStatus, assignOrderToDeliveryMan };

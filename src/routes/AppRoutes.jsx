@@ -2,9 +2,12 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
 import ClientLoginPage from '../pages/ClientLoginPage';
 import CreateClientProfile from '../pages/CreateClientProfile';
+import DeliveryManLoginPage from '../pages/DeliveryManLoginPage';
 import ClientDashboard from '../pages/ClientDashboard';
 import ClientEditProfile from '../pages/ClientEditProfile';
 import ClientOrderDetails from '../pages/ClientOrderDetails';
+import DeliveryManDashboard from '../pages/DeliveryManDashboard';
+import DeliveryManOrderDetails from '../pages/DeliveryManOrderDetails';
 import BlankPage from '../pages/BlankPage';
 import Dashboard from '../pages/Dashboard';
 import OrderDetails from '../pages/OrderDetails';
@@ -23,6 +26,7 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<ClientLoginPage />} />
         <Route path="/admin" element={<LoginPage />} />
+        <Route path="/entregador" element={<DeliveryManLoginPage />} />
 
         {/* protected routes */}
         <Route element={<RequireAuth />}>
@@ -39,6 +43,8 @@ export default function AppRoutes() {
           <Route path="/cliente/edit" element={<ClientEditProfile />} />
           <Route path="/cliente/create-pedido" element={<CreateOrderPage />} />
           <Route path="/cliente/pedidos/:id" element={<ClientOrderDetails />} />
+          <Route path="/entregador-dashboard" element={<DeliveryManDashboard />} />
+          <Route path="/entregador/pedidos/:id" element={<DeliveryManOrderDetails />} />
         </Route>
 
         <Route path="/cliente/create" element={<CreateClientProfile />} />

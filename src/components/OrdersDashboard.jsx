@@ -10,8 +10,9 @@ export default function OrdersDashboard({
   showNameFilter = true,
   showCreateOrderButton = false,
   onCreateOrder,
+  initialStatus = 'PENDING',
 }) {
-  const [filterStatus, setFilterStatus] = useState('PENDING');
+  const [filterStatus, setFilterStatus] = useState(initialStatus);
   const [searchTerm, setSearchTerm] = useState('');
 
   const stats = useMemo(
