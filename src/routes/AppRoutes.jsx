@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
+import ClientLoginPage from '../pages/ClientLoginPage';
+import CreateClientProfile from '../pages/CreateClientProfile';
 import BlankPage from '../pages/BlankPage';
 import Dashboard from '../pages/Dashboard';
 import OrderDetails from '../pages/OrderDetails';
@@ -15,6 +17,7 @@ export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<ClientLoginPage />} />
         <Route path="/admin" element={<LoginPage />} />
 
         {/* protected routes */}
@@ -30,7 +33,8 @@ export default function AppRoutes() {
           <Route path="/admin/create" element={<CreateProfile />} />
         </Route>
 
-        <Route path="*" element={<Navigate to="/admin" replace />} />
+        <Route path="/cliente/create" element={<CreateClientProfile />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

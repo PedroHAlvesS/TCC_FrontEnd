@@ -1,10 +1,10 @@
 import { createAuthPayload } from '../models/authModel';
 
 export async function login(email, password) {
-  
   const payload = createAuthPayload(email, password);
+  const backendBaseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080';
 
-  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
+  const response = await fetch(`${backendBaseUrl}/api/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
