@@ -15,7 +15,7 @@ export default function ClientLoginPage() {
     await handleLogin({
       usuario: email,
       senha: password,
-      onSuccess: () => navigate('/admin/blank', { replace: true }),
+      onSuccess: () => navigate('/cliente-dashboard', { replace: true }),
       onError: setError,
     });
   }

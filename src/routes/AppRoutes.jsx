@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
 import ClientLoginPage from '../pages/ClientLoginPage';
 import CreateClientProfile from '../pages/CreateClientProfile';
+import ClientDashboard from '../pages/ClientDashboard';
 import BlankPage from '../pages/BlankPage';
 import Dashboard from '../pages/Dashboard';
 import OrderDetails from '../pages/OrderDetails';
@@ -31,6 +32,7 @@ export default function AppRoutes() {
           <Route path="/admin/blank" element={<BlankPage />} />
           <Route path="/admin/edit" element={<EditProfile />} />
           <Route path="/admin/create" element={<CreateProfile />} />
+          <Route path="/cliente-dashboard" element={<ClientDashboard />} />
         </Route>
 
         <Route path="/cliente/create" element={<CreateClientProfile />} />
