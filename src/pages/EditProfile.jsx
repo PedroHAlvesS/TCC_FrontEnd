@@ -5,6 +5,7 @@ import { clearToken, setUserEmail } from '../services/auth';
 import Sidebar from '../components/Sidebar';
 import { updateAdminProfile } from '../services/EditAdminProfile';
 import { validateProfile } from '../utils/validators';
+import ProfileEditForm from '../components/ProfileEditForm';
 
 export default function EditProfile() {
   const [admin, setAdmin] = useState(null);

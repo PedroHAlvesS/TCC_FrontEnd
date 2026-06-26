@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { clearToken, getToken, getUserEmail } from '../services/auth';
+import { clearToken, getUserEmail } from '../services/auth';
 import { fetchCustomerOrdersByEmail } from '../services/dashboardService';
+import { fetchCustomerProfileByEmail, deleteCustomerAccount } from '../services/CustomerProfileService';
 import OrdersDashboard from '../components/OrdersDashboard';
 
 export default function ClientDashboard() {
   const [orders, setOrders] = useState(null);
   const [error, setError] = useState('');
+  const [profileOpen, setProfileOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +33,20 @@ export default function ClientDashboard() {
   function handleLogout() {
     clearToken();
     navigate('/', { replace: true });
+  }
+
+  async function handleDeleteAccount() {
+    const confirmed = window.confirm('Tem certeza de que deseja excluir sua conta? Esta ação não pode ser desfeita.');
+    if (!confirmed) return;
+
+    try {
+      const profile = await fetchCustomerProfileByEmail(getUserEmail());
+      await deleteCustomerAccount(profile.id);
+      clearToken();
+      navigate('/', { replace: true });
+    } catch (err) {
+      setError(err.message || 'Erro ao excluir conta');
+    }
   }
 
   if (error) {
@@ -63,13 +79,28 @@ export default function ClientDashboard() {
           orders={orders}
           showNameFilter={false}
           profileHeader={
-            <button className="profile-button" type="button" onClick={handleLogout}>
-              <span className="profile-avatar">C</span>
-              <div className="profile-info">
-                <span>{getUserEmail() || 'Cliente'}</span>
-                <small>Conta do cliente</small>
-              </div>
-            </button>
+            <>
+              <button className="profile-button" type="button" onClick={() => setProfileOpen((prev) => !prev)}>
+                <span className="profile-avatar">C</span>
+                <div className="profile-info">
+                  <span>{getUserEmail() || 'Cliente'}</span>
+                  <small>Conta do cliente</small>
+                </div>
+              </button>
+              {profileOpen && (
+                <div className="profile-dropdown">
+                  <button type="button" className="profile-dropdown-item" onClick={() => navigate('/cliente/edit')}>
+                    Editar Perfil
+                  </button>
+                  <button type="button" className="profile-dropdown-item" onClick={handleDeleteAccount}>
+                    Excluir Conta
+                  </button>
+                  <button type="button" className="profile-dropdown-item logout" onClick={handleLogout}>
+                    Sair
+                  </button>
+                </div>
+              )}
+            </>
           }
           onRowClick={(order) => navigate(`/pedidos/${order.id}`)}
         />
