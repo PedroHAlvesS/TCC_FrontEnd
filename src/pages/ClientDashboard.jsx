@@ -78,6 +78,8 @@ export default function ClientDashboard() {
           subtitle="Confira seus pedidos"
           orders={orders}
           showNameFilter={false}
+          showCreateOrderButton={true}
+          onCreateOrder={() => navigate('/cliente/create-pedido')}
           profileHeader={
             <>
               <button className="profile-button" type="button" onClick={() => setProfileOpen((prev) => !prev)}>
@@ -102,7 +104,7 @@ export default function ClientDashboard() {
               )}
             </>
           }
-          onRowClick={(order) => navigate(`/pedidos/${order.id}`)}
+          onRowClick={(order) => navigate(`/cliente/pedidos/${order.id}`)}
         />
       </div>
     </div>

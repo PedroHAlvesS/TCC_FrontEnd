@@ -8,6 +8,8 @@ export default function OrdersDashboard({
   profileMenu,
   onRowClick,
   showNameFilter = true,
+  showCreateOrderButton = false,
+  onCreateOrder,
 }) {
   const [filterStatus, setFilterStatus] = useState('PENDING');
   const [searchTerm, setSearchTerm] = useState('');
@@ -67,6 +69,11 @@ export default function OrdersDashboard({
             <h2>Pedidos</h2>
             {showNameFilter ? <p>Filtre por status ou pelo nome do cliente.</p> : <p>Filtre por status.</p>}
           </div>
+          {showCreateOrderButton ? (
+            <button type="button" className="primary-button" onClick={onCreateOrder}>
+              Criar Pedido
+            </button>
+          ) : null}
         </div>
 
         <div className="dashboard-filter-row">
