@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from '../pages/LoginPage';
-import ClientLoginPage from '../pages/ClientLoginPage';
+import AdminLoginPage from '../pages/AdminLogin.page';
+import CustomerLoginPage from '../pages/CustomerLogin.page';
 import CreateClientProfile from '../pages/CreateClientProfile';
-import DeliveryManLoginPage from '../pages/DeliveryManLoginPage';
+import DeliveryManLoginPage from '../pages/DeliveryManLogin.page';
 import ClientDashboard from '../pages/ClientDashboard';
 import ClientEditProfile from '../pages/ClientEditProfile';
 import ClientOrderDetails from '../pages/ClientOrderDetails';
@@ -24,8 +24,8 @@ export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ClientLoginPage />} />
-        <Route path="/admin" element={<LoginPage />} />
+        <Route path="/" element={<CustomerLoginPage />} />
+        <Route path="/admin" element={<AdminLoginPage />} />
         <Route path="/entregador" element={<DeliveryManLoginPage />} />
 
         {/* protected routes */}

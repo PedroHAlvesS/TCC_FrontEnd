@@ -3,12 +3,12 @@ import { setToken } from '../services/auth';
 
 import { setUserEmail } from '../services/auth';
 
-export async function handleLogin({ usuario, senha, onSuccess, onError }) {
+export async function handleLogin({ email, password, onSuccess, onError }) {
   try {
-    const data = await login(usuario, senha);
+    const data = await login(email, password);
     if (data && data.token) {
       setToken(data.token);
-      setUserEmail(usuario);
+      setUserEmail(email);
     }
     onSuccess();
   } catch (error) {
