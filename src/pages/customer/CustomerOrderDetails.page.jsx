@@ -1,36 +1,43 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import OrderDetailsView from '../../components/OrderDetailsView';
 import { clearToken, getUserEmail } from '../../services/auth';
 import { fetchCustomerOrders } from '../../services/customerDashboard.service';
-import { fetchCustomerProfile, deleteCustomerAccount } from '../../services/customerProfile.service';
-import OrdersDashboardComponent from '../../components/OrdersDashboard.component';
 
-export default function CustomerDashboardPage() {
-  const [orders, setOrders] = useState(null);
-  const [customerData, setCustomerData] = useState(null);
+export default function CustomerOrderDetailsPage() {
+  const { id } = useParams();
+  const [order, setOrder] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [customerData, setCustomerData] = useState(null);
   const [profileOpen, setProfileOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     let mounted = true;
+    const ordersFromState = location.state.orders;
+    setCustomerData(location.state.customerData);
 
-    Promise.all([fetchCustomerProfile(), fetchCustomerOrders()])
-      .then(([customerProfileData, orderData]) => {
-        if (!mounted) return;
-        setCustomerData(customerProfileData);
-        setOrders(orderData);
-      })
-      .catch((err) => {
-        if (!mounted) return;
-        setError(err.message);
-      });
+    const resolveOrder = (orders) => {
+      const selected = orders?.find((item) => String(item.id) === String(id));
+      if (!selected) {
+        setError('Pedido não encontrado');
+        return;
+      }
 
+      if (mounted) {
+        setOrder(selected);
+      }
+    };
+
+    resolveOrder(ordersFromState);
+    if (mounted) setLoading(false);
     return () => {
       mounted = false;
     };
-
-  }, []);
+    
+  }, [id, location.state]);
 
   function handleLogout() {
     clearToken();
@@ -50,6 +57,16 @@ export default function CustomerDashboardPage() {
     }
   }
 
+  if (loading) {
+    return (
+      <div className="page-shell dashboard-shell">
+        <div className="dashboard-main" style={{ padding: 24 }}>
+          <h2>Carregando pedido...</h2>
+        </div>
+      </div>
+    );
+  }
+
   if (error) {
     return (
       <div className="page-shell dashboard-shell">
@@ -61,27 +78,15 @@ export default function CustomerDashboardPage() {
     );
   }
 
-  if (!orders) {
-    return (
-      <div className="page-shell dashboard-shell">
-        <div className="dashboard-main" style={{ padding: 24 }}>
-          <h2>Carregando dashboard do cliente…</h2>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="page-shell dashboard-shell">
       <div className="dashboard-main">
-        <OrdersDashboardComponent
-          title="Painel do Cliente"
-          subtitle="Confira seus pedidos"
-          orders={orders}
-          showNameFilter={false}
-          showCreateOrderButton={true}
-          onCreateOrder={() => navigate('/cliente/create-pedido')}
-          profileHeader={
+        <OrderDetailsView
+          title={`Detalhes do Pedido #${order.id}`}
+          subtitle={order.status}
+          order={order}
+          onBack={() => navigate('/cliente-dashboard')}
+         profileHeader={
             <>
               <button className="profile-button" type="button" onClick={() => setProfileOpen((prev) => !prev)}>
                 <span className="profile-avatar">C</span>
@@ -105,7 +110,8 @@ export default function CustomerDashboardPage() {
               )}
             </>
           }
-          onRowClick={(order) => navigate(`/cliente/pedidos/${order.id}`, { state: { orders, customerData } })}
+          errorMessage={error}
+          onClearError={() => setError('')}
         />
       </div>
     </div>

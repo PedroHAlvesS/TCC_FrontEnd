@@ -5,7 +5,7 @@ import CreateClientProfile from '../pages/CreateClientProfile';
 import DeliveryManLoginPage from '../pages/delivery/DeliveryManLogin.page';
 import CustomerDashboardPage from '../pages/customer/CustomerDashboard.page';
 import ClientEditProfile from '../pages/ClientEditProfile';
-import ClientOrderDetails from '../pages/ClientOrderDetails';
+import CustomerOrderDetailsPage from '../pages/customer/CustomerOrderDetails.page';
 import DeliveryManDashboardPage from '../pages/delivery/DeliveryManDashboard.page';
 import DeliveryManOrderDetailsPage from '../pages/delivery/DeliveryManOrderDetails.page';
 import BlankPage from '../pages/BlankPage';
@@ -37,6 +37,7 @@ export default function AppRoutes() {
         <Route element={<RequireAuth redirectTo="/" />}>
           <Route path="/cliente-dashboard" element={<CustomerDashboardPage />} />
           <Route path="/cliente/create-pedido" element={<CustomerCreateOrderPage />} />
+          <Route path="/cliente/pedidos/:id" element={<CustomerOrderDetailsPage />} />
         </Route>
 
         {/* protected delivery man routes */}
@@ -56,7 +57,7 @@ export default function AppRoutes() {
           <Route path="/admin/edit" element={<EditProfile />} />
           <Route path="/admin/create" element={<CreateProfile />} />
           <Route path="/cliente/edit" element={<ClientEditProfile />} />
-          <Route path="/cliente/pedidos/:id" element={<ClientOrderDetails />} />
+          
           
         </Route>
 
