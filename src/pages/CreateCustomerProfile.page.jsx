@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createClientProfile } from '../services/createClientProfile.service';
 import { validateProfile } from '../utils/validators';
+import { ROUTES, buildRoute } from '../routes/ROUTES';
+
 
 export default function CreateCustomerProfilePage() {
   const [name, setName] = useState('');
@@ -102,7 +104,7 @@ export default function CreateCustomerProfilePage() {
             </label>
 
             <div className="edit-profile-actions">
-              <button type="button" className="secondary-button" onClick={() => navigate('/')}>Voltar para Login</button>
+              <button type="button" className="secondary-button" onClick={() => navigate(ROUTES.ROOT)}>Voltar para Login</button>
               <button
                 type="button"
                 className="primary-button"

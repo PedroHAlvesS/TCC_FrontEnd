@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { handleLogin } from '../../controllers/authController';
 import LoginComponent from '../../components/Login.component';
+import { ROUTES } from '../../routes/ROUTES';
+
 
 export default function DeliveryManLoginPage() {
   const [email, setEmail] = useState('');
@@ -16,7 +18,7 @@ export default function DeliveryManLoginPage() {
     await handleLogin({
       email,
       password,
-      onSuccess: () => navigate('/entregador-dashboard', { replace: true }),
+      onSuccess: () => navigate(ROUTES.DELIVERY_DASHBOARD, { replace: true }),
       onError: setError,
     });
   }

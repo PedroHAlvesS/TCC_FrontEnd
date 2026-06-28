@@ -18,44 +18,44 @@ import AdminCreateProfilePage from '../pages/admin/AdminCreateProfile.page';
 import AdminDeliveryMenPage from '../pages/admin/AdminDeliveryMen.page';
 import CustomerCreateOrderPage from '../pages/customer/CustomerCreateOrder.page';
 import RequireAuth from './RequireAuth';
+import { ROUTES } from './ROUTES';
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<CustomerLoginPage />} />
-        <Route path="/admin" element={<AdminLoginPage />} />
-        <Route path="/entregador" element={<DeliveryManLoginPage />} />
+        <Route path={ROUTES.ROOT} element={<CustomerLoginPage />} />
+        <Route path={ROUTES.ADMIN_LOGIN} element={<AdminLoginPage />} />
+        <Route path={ROUTES.DELIVERY_LOGIN} element={<DeliveryManLoginPage />} />
 
         {/* protected admin routes */}
-        <Route element={<RequireAuth redirectTo="/admin" />}>
-          <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
-          <Route path="/admin/edit" element={<AdminEditProfilePage />} />
-          <Route path="/admin/create" element={<AdminCreateProfilePage />} />
-          <Route path="/admin-delivery-men" element={<AdminDeliveryMenPage />} />
-          <Route path="/admin-delivery-men/orders/:id" element={<AdminDeliveryManOrdersPage />} />
-          <Route path="/pedidos/:id" element={<AdminOrderDetailsPage />} />
-          <Route path="/admin-clients" element={<AdminCustomersListPage />} />
-          <Route path="/clientes/pedidos/:id" element={<AdminCustomerOrdersPage />} />
+        <Route element={<RequireAuth redirectTo={ROUTES.ADMIN_LOGIN} />}>
+          <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboardPage />} />
+          <Route path={ROUTES.ADMIN_EDIT_PROFILE} element={<AdminEditProfilePage />} />
+          <Route path={ROUTES.ADMIN_CREATE_PROFILE} element={<AdminCreateProfilePage />} />
+          <Route path={ROUTES.ADMIN_DELIVERY_MEN} element={<AdminDeliveryMenPage />} />
+          <Route path={ROUTES.ADMIN_DELIVERY_MEN_ORDERS} element={<AdminDeliveryManOrdersPage />} />
+          <Route path={ROUTES.ADMIN_ORDER_DETAILS} element={<AdminOrderDetailsPage />} />
+          <Route path={ROUTES.ADMIN_CUSTOMERS_LIST} element={<AdminCustomersListPage />} />
+          <Route path={ROUTES.ADMIN_CUSTOMER_ORDERS} element={<AdminCustomerOrdersPage />} />
         </Route>
 
         {/* protected customer routes */}
-        <Route element={<RequireAuth redirectTo="/" />}>
-          <Route path="/cliente-dashboard" element={<CustomerDashboardPage />} />
-          <Route path="/cliente/create-pedido" element={<CustomerCreateOrderPage />} />
-          <Route path="/cliente/pedidos/:id" element={<CustomerOrderDetailsPage />} />
-          <Route path="/cliente/edit" element={<CustomerEditProfilePage />} />
+        <Route element={<RequireAuth redirectTo={ROUTES.ROOT} />}>
+          <Route path={ROUTES.CUSTOMER_DASHBOARD} element={<CustomerDashboardPage />} />
+          <Route path={ROUTES.CUSTOMER_CREATE_ORDER} element={<CustomerCreateOrderPage />} />
+          <Route path={ROUTES.CUSTOMER_ORDER_DETAILS} element={<CustomerOrderDetailsPage />} />
+          <Route path={ROUTES.CUSTOMER_EDIT_PROFILE} element={<CustomerEditProfilePage />} />
         </Route>
 
         {/* protected delivery man routes */}
-        <Route element={<RequireAuth redirectTo="/entregador" />}>
-          <Route path="/entregador-dashboard" element={<DeliveryManDashboardPage />} />
-          <Route path="/entregador/pedidos/:id" element={<DeliveryManOrderDetailsPage />} />
+        <Route element={<RequireAuth redirectTo={ROUTES.DELIVERY_LOGIN} />}>
+          <Route path={ROUTES.DELIVERY_DASHBOARD} element={<DeliveryManDashboardPage />} />
+          <Route path={ROUTES.DELIVERY_ORDER_DETAILS} element={<DeliveryManOrderDetailsPage />} />
         </Route>
 
-
-        <Route path="/cliente/create" element={<CreateCustomerProfilePage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path={ROUTES.CUSTOMER_CREATE} element={<CreateCustomerProfilePage />} />
+        <Route path="*" element={<Navigate to={ROUTES.ROOT} replace />} />
       </Routes>
     </BrowserRouter>
   );

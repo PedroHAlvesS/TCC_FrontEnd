@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createOrder } from '../../services/customerDashboard.service';
 import { fetchAddressByZipCode } from '../../services/cep.service';
+import { ROUTES } from '../../routes/ROUTES';
 
 export default function CustomerCreateOrderPage() {
   const [description, setDescription] = useState('');
@@ -99,7 +100,7 @@ export default function CustomerCreateOrderPage() {
     <div className="page-shell">
       <main className="login-container">
         <div className="login-card">
-          <button type="button" className="secondary-button" onClick={() => navigate('/cliente-dashboard')}>
+          <button type="button" className="secondary-button" onClick={() => navigate(ROUTES.CUSTOMER_DASHBOARD)}>
             Voltar
           </button>
           <h2>Novo Pedido</h2>

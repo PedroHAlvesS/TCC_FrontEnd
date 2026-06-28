@@ -3,6 +3,8 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import OrderDetailsView from '../../components/OrderDetailsView';
 import { clearToken, getUserEmail } from '../../services/auth';
 import { updateDeliveryManOrderStatus } from '../../services/deliveryManDashboard.service';
+import { ROUTES, buildRoute } from '../../routes/ROUTES';
+
 
 function normalizeStatus(status) {
   return String(status || '')
@@ -77,7 +79,7 @@ export default function DeliveryManOrderDetailsPage() {
 
   function handleLogout() {
     clearToken();
-    navigate('/entregador', { replace: true });
+    navigate(ROUTES.DELIVERY_LOGIN, { replace: true });
   }
 
   async function handleUpdateStatus() {
@@ -128,7 +130,7 @@ export default function DeliveryManOrderDetailsPage() {
           title={`Detalhes do Pedido #${order.id}`}
           subtitle={order.status}
           order={order}
-          onBack={() => navigate('/entregador-dashboard')}
+          onBack={() => navigate(ROUTES.DELIVERY_DASHBOARD)}
           profileHeader={
             <>
               <button className="profile-button" type="button" onClick={() => setProfileOpen((prev) => !prev)}>

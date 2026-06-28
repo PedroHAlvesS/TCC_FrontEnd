@@ -4,6 +4,7 @@ import Sidebar from '../../components/Sidebar';
 import CustomerDetailsCard from '../../components/CustomerDetailsCard';
 import { clearToken } from '../../services/auth';
 import { fetchAdminProfile, fetchCustomers, fetchCustomerOrders } from '../../services/adminDashboard.service';
+import { ROUTES, buildRoute } from '../../routes/ROUTES';
 
 function formatDate(dateString) {
   if (!dateString) return '-';
@@ -68,7 +69,7 @@ export default function AdminCustomerOrdersPage() {
 
   function handleLogout() {
     clearToken();
-    navigate('/admin', { replace: true });
+    navigate(ROUTES.ADMIN_LOGIN, { replace: true });
   }
 
   if (loading) {
@@ -94,10 +95,10 @@ export default function AdminCustomerOrdersPage() {
 
   return (
     <div className="page-shell dashboard-shell">
-      <Sidebar activePath="/clientes" />
+      <Sidebar activePath={ROUTES.ADMIN_CUSTOMERS_LIST} />
       <div className="dashboard-main">
         <div className="page-actions-row">
-          <button type="button" className="secondary-button" onClick={() => navigate('/admin-clients')}>
+          <button type="button" className="secondary-button" onClick={() => navigate(ROUTES.ADMIN_CUSTOMERS_LIST)}>
             ← Voltar para clientes
           </button>
         </div>
@@ -163,7 +164,7 @@ export default function AdminCustomerOrdersPage() {
                   </tr>
                 ) : (
                   filteredOrders.map((order) => (
-                    <tr key={order.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/pedidos/${order.id}`)}>
+                    <tr key={order.id} style={{ cursor: 'pointer' }} onClick={() => navigate(buildRoute(ROUTES.ADMIN_ORDER_DETAILS, { id: order.id }))}>
                       <td>#{order.id}</td>
                       <td>{order.customerName}</td>
                       <td>{order.deliveryManName || '-'}</td>

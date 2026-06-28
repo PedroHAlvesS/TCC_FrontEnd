@@ -6,6 +6,7 @@ import Sidebar from '../../components/Sidebar';
 import { updateAdminProfile } from '../../services/editAdminProfile.service';
 import { validateProfile } from '../../utils/validators';
 import ProfileEditForm from '../../components/ProfileEditForm';
+import { ROUTES } from '../../routes/ROUTES';
 
 export default function AdminEditProfilePage() {
   const [loading, setLoading] = useState(false);
@@ -53,7 +54,7 @@ export default function AdminEditProfilePage() {
 
   function handleLogout() {
     clearToken();
-    navigate('/admin', { replace: true });
+    navigate(ROUTES.ADMIN_LOGIN, { replace: true });
   }
 
   if (loading) {
@@ -121,7 +122,7 @@ export default function AdminEditProfilePage() {
               </div>
             </label>
             <div className="edit-profile-actions">
-              <button type="button" className="primary-button" onClick={() => navigate('/admin-dashboard')}>
+              <button type="button" className="primary-button" onClick={() => navigate(ROUTES.ADMIN_DASHBOARD)}>
                 Voltar para o Dashboard
               </button>
               <button

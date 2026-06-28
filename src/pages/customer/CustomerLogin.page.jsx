@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginComponent from '../../components/Login.component';
 import { handleLogin } from '../../controllers/authController';
+import { ROUTES } from '../../routes/ROUTES';
+
 
 export default function CustomerLoginPage() {
   const [email, setEmail] = useState('');
@@ -16,7 +18,7 @@ export default function CustomerLoginPage() {
     await handleLogin({
       email,
       password,
-      onSuccess: () => navigate('/cliente-dashboard', { replace: true }),
+      onSuccess: () => navigate(ROUTES.CUSTOMER_DASHBOARD, { replace: true }),
       onError: setError,
     });
   }
@@ -32,7 +34,7 @@ export default function CustomerLoginPage() {
       onSubmit={onSubmit}
       showRegisterLink={true}
       registerButtonText="Crie sua conta"
-      onRegisterClick={() => navigate('/cliente/create')}
+      onRegisterClick={() => navigate(ROUTES.CUSTOMER_CREATE)}
     />
   );
 }

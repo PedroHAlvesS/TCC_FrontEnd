@@ -4,6 +4,7 @@ import Sidebar from '../../components/Sidebar';
 import OrderDetailsView from '../../components/OrderDetailsView';
 import { fetchOrders, fetchAdminProfile, fetchDeliveryMen, assignOrderToDeliveryMan } from '../../services/adminDashboard.service';
 import { clearToken } from '../../services/auth';
+import { ROUTES, buildRoute } from '../../routes/ROUTES';
 
 export default function AdminOrderDetailsPage() {
   const { id } = useParams();
@@ -60,7 +61,7 @@ export default function AdminOrderDetailsPage() {
       await assignOrderToDeliveryMan(order.id, selectedDeliveryManId);
       setSuccessMessage('Pedido atribuído ao entregador com sucesso!');
       setTimeout(() => {
-        navigate('/admin-dashboard');
+        navigate(ROUTES.ADMIN_DASHBOARD);
       }, 2000);
     } catch (err) {
       setError(err.message || 'Erro ao atribuir pedido ao entregador');
@@ -92,13 +93,13 @@ export default function AdminOrderDetailsPage() {
 
   return (
     <div className="page-shell dashboard-shell">
-      <Sidebar activePath="/admin-dashboard" />
+      <Sidebar activePath={ROUTES.ADMIN_DASHBOARD} />
       <div className="dashboard-main">
         <OrderDetailsView
           title={`Detalhes do Pedido #${order.id}`}
           subtitle={order.status}
           order={order}
-          onBack={() => navigate('/admin-dashboard')}
+          onBack={() => navigate(ROUTES.ADMIN_DASHBOARD)}
           successMessage={successMessage}
           errorMessage={error}
           onClearError={() => setError('')}

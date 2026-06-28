@@ -4,6 +4,8 @@ import { clearToken, getUserEmail, setUserEmail } from '../../services/auth';
 import { updateCustomerProfile } from '../../services/customerProfile.service';
 import { validateProfile } from '../../utils/validators';
 import ProfileEditForm from '../../components/ProfileEditForm';
+import { ROUTES } from '../../routes/ROUTES';
+
 
 export default function CustomerEditProfilePage() {
   const [loading, setLoading] = useState(false);
@@ -52,7 +54,7 @@ export default function CustomerEditProfilePage() {
 
   function handleLogout() {
     clearToken();
-    navigate('/', { replace: true });
+    navigate(ROUTES.ROOT, { replace: true });
   }
 
   if (loading) {
@@ -98,7 +100,7 @@ export default function CustomerEditProfilePage() {
           onPasswordChange={setPassword}
           onTogglePassword={() => setShowPassword((prev) => !prev)}
           onSave={handleEditProfile}
-          onCancel={() => navigate('/cliente-dashboard')}
+          onCancel={() => navigate(ROUTES.CUSTOMER_DASHBOARD)}
           onClearSuccess={() => setSuccessMessage('')}
           onClearError={() => setErrorMessage('')}
           saving={saving}

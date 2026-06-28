@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { handleLogin } from '../../controllers/authController';
 import LoginComponent from '../../components/Login.component';
+import { ROUTES } from '../../routes/ROUTES';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ export default function AdminLoginPage() {
     await handleLogin({
       email,
       password,
-      onSuccess: () => navigate('/admin-dashboard', { replace: true }),
+      onSuccess: () => navigate(ROUTES.ADMIN_DASHBOARD, { replace: true }),
       onError: setError,
     });
   }

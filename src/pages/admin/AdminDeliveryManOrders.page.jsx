@@ -4,6 +4,7 @@ import Sidebar from '../../components/Sidebar';
 import DeliveryManDetailsCard from '../../components/DeliveryManDetailsCard';
 import { clearToken } from '../../services/auth';
 import { fetchAdminProfile, fetchDeliveryMen, fetchDeliveryManOrders, deleteDeliveryMan } from '../../services/adminDashboard.service';
+import { ROUTES, buildRoute } from '../../routes/ROUTES';
 
 function formatDate(dateString) {
   if (!dateString) return '-';
@@ -68,7 +69,7 @@ export default function AdminDeliveryManOrdersPage() {
 
   function handleLogout() {
     clearToken();
-    navigate('/admin', { replace: true });
+    navigate(ROUTES.ADMIN_LOGIN, { replace: true });
   }
 
   async function handleDeleteCurrentDeliveryMan() {
@@ -83,7 +84,7 @@ export default function AdminDeliveryManOrdersPage() {
     try {
       await deleteDeliveryMan(deliveryMan.id);
       setSuccessMessage('Entregador excluído com sucesso.');
-      setTimeout(() => navigate('/admin-delivery-men'), 700);
+      setTimeout(() => navigate(ROUTES.ADMIN_DELIVERY_MEN), 700);
     } catch (err) {
       setError(err?.message || 'Erro ao excluir entregador');
     } finally {
@@ -92,7 +93,7 @@ export default function AdminDeliveryManOrdersPage() {
   }
 
   function handleEditCurrentDeliveryMan() {
-    navigate('/admin-delivery-men', { state: { editDeliveryManId: deliveryMan?.id } });
+    navigate(ROUTES.ADMIN_DELIVERY_MEN, { state: { editDeliveryManId: deliveryMan?.id } });
   }
 
   if (loading) {
@@ -121,7 +122,7 @@ export default function AdminDeliveryManOrdersPage() {
       <Sidebar activePath="/admin-delivery-men" />
       <div className="dashboard-main">
         <div className="page-actions-row">
-          <button type="button" className="secondary-button" onClick={() => navigate('/admin-delivery-men')}>
+          <button type="button" className="secondary-button" onClick={() => navigate(ROUTES.ADMIN_DELIVERY_MEN)}>
             ← Voltar para entregadores
           </button>
         </div>
@@ -209,13 +210,13 @@ export default function AdminDeliveryManOrdersPage() {
                 ) : (
                   filteredOrders.map((order) => (
                     <tr key={order.id} style={{ cursor: 'pointer' }}>
-                      <td onClick={() => navigate(`/pedidos/${order.id}`)}>#{order.id}</td>
-                      <td onClick={() => navigate(`/pedidos/${order.id}`)}>{order.customerName}</td>
-                      <td onClick={() => navigate(`/pedidos/${order.id}`)}>
+                      <td onClick={() => navigate(buildRoute(ROUTES.ADMIN_ORDER_DETAILS, { id: order.id }))}>#{order.id}</td>
+                      <td onClick={() => navigate(buildRoute(ROUTES.ADMIN_ORDER_DETAILS, { id: order.id }))}>{order.customerName}</td>
+                      <td onClick={() => navigate(buildRoute(ROUTES.ADMIN_ORDER_DETAILS, { id: order.id }))}>
                         {order.address?.street}, {order.address?.number}
                       </td>
-                      <td onClick={() => navigate(`/pedidos/${order.id}`)}>{formatDate(order.creationDate)}</td>
-                      <td onClick={() => navigate(`/pedidos/${order.id}`)}>{order.status}</td>
+                      <td onClick={() => navigate(buildRoute(ROUTES.ADMIN_ORDER_DETAILS, { id: order.id }))}>{formatDate(order.creationDate)}</td>
+                      <td onClick={() => navigate(buildRoute(ROUTES.ADMIN_ORDER_DETAILS, { id: order.id }))}>{order.status}</td>
                     </tr>
                   ))
                 )}

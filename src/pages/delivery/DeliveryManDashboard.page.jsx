@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import OrdersDashboard from '../../components/OrdersDashboard.component';
 import { clearToken, getUserEmail } from '../../services/auth';
 import { fetchDeliveryManOrders, fetchDeliveryManProfile } from '../../services/deliveryManDashboard.service';
+import { ROUTES, buildRoute } from '../../routes/ROUTES';
+
 
 export default function DeliveryManDashboardPage() {
   const [orders, setOrders] = useState(null);
@@ -33,7 +35,7 @@ export default function DeliveryManDashboardPage() {
 
   function handleLogout() {
     clearToken();
-    navigate('/entregador', { replace: true });
+    navigate(ROUTES.DELIVERY_LOGIN, { replace: true });
   }
 
   if (error) {
@@ -66,7 +68,7 @@ export default function DeliveryManDashboardPage() {
           orders={orders}
           showNameFilter={true}
           showCreateOrderButton={false}
-          initialStatus="ASSIGNED"
+          initialStatus="Atribuído"
           profileHeader={
             <>
               <button className="profile-button" type="button" onClick={() => setProfileOpen((prev) => !prev)}>
@@ -86,7 +88,7 @@ export default function DeliveryManDashboardPage() {
             </>
           }
           onRowClick={(order) =>
-            navigate(`/entregador/pedidos/${order.id}`, {
+            navigate(buildRoute(ROUTES.DELIVERY_ORDER_DETAILS, { id: order.id }), {
               state: { orders, deliveryManData },
             })
           }

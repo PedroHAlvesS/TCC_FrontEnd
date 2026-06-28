@@ -4,6 +4,7 @@ import Sidebar from '../../components/Sidebar';
 import OrdersDashboardComponent from '../../components/OrdersDashboard.component';
 import { fetchOrders, fetchAdminProfile } from '../../services/adminDashboard.service';
 import { clearToken } from '../../services/auth';
+import { ROUTES, buildRoute } from '../../routes/ROUTES';
 
 export default function AdminDashboardPage() {
   const [orders, setOrders] = useState(null);
@@ -54,7 +55,7 @@ export default function AdminDashboardPage() {
 
   function handleLogout() {
     clearToken();
-    navigate('/admin', { replace: true });
+    navigate(ROUTES.ADMIN_LOGIN, { replace: true });
   }
 
   return (
@@ -76,10 +77,10 @@ export default function AdminDashboardPage() {
               </button>
               {profileOpen && (
                 <div className="profile-dropdown">
-                  <button type="button" className="profile-dropdown-item" onClick={() => navigate('/admin/edit')}>
+                  <button type="button" className="profile-dropdown-item" onClick={() => navigate(ROUTES.ADMIN_EDIT_PROFILE)}>
                     Editar Perfil
                   </button>
-                  <button type="button" className="profile-dropdown-item" onClick={() => navigate('/admin/create')}>
+                  <button type="button" className="profile-dropdown-item" onClick={() => navigate(ROUTES.ADMIN_CREATE_PROFILE)}>
                     Criar Novo Perfil
                   </button>
                   <button type="button" className="profile-dropdown-item logout" onClick={handleLogout}>
@@ -89,7 +90,7 @@ export default function AdminDashboardPage() {
               )}
             </>
           }
-          onRowClick={(order) => navigate(`/pedidos/${order.id}`)}
+          onRowClick={(order) => navigate(buildRoute(ROUTES.ADMIN_ORDER_DETAILS, { id: order.id }))}
         />
       </div>
     </div>

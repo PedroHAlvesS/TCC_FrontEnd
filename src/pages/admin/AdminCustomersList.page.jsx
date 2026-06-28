@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import { fetchCustomers, fetchAdminProfile } from '../../services/adminDashboard.service';
 import { clearToken } from '../../services/auth';
+import { ROUTES, buildRoute } from '../../routes/ROUTES';
 
 function formatPhone(phone) {
   if (!phone) return '-';
@@ -50,7 +51,7 @@ export default function AdminCustomersListPage() {
 
   function handleLogout() {
     clearToken();
-    navigate('/admin', { replace: true });
+    navigate(ROUTES.ADMIN_LOGIN, { replace: true });
   }
 
   const filteredCustomers = (customers || []).filter((customer) =>
@@ -80,7 +81,7 @@ export default function AdminCustomersListPage() {
 
   return (
     <div className="page-shell dashboard-shell">
-      <Sidebar activePath="/clientes" />
+      <Sidebar activePath={ROUTES.ADMIN_CUSTOMERS_LIST} />
       <div className="dashboard-main">
         <header className="dashboard-header">
           <div>
@@ -98,10 +99,10 @@ export default function AdminCustomersListPage() {
             </button>
             {profileOpen && (
               <div className="profile-dropdown">
-                <button type="button" className="profile-dropdown-item" onClick={() => navigate('/admin/edit')}>
+                <button type="button" className="profile-dropdown-item" onClick={() => navigate(ROUTES.ADMIN_EDIT)}>
                   Editar Perfil
                 </button>
-                <button type="button" className="profile-dropdown-item" onClick={() => navigate('/admin/create')}>
+                <button type="button" className="profile-dropdown-item" onClick={() => navigate(ROUTES.ADMIN_CREATE)}>
                   Criar Novo Perfil
                 </button>
                 <button type="button" className="profile-dropdown-item logout" onClick={handleLogout}>
@@ -152,7 +153,7 @@ export default function AdminCustomersListPage() {
                   </tr>
                 ) : (
                   filteredCustomers.map((customer) => (
-                    <tr key={customer.id} onClick={() => navigate(`/clientes/pedidos/${customer.id}`)} style={{ cursor: 'pointer' }}>
+                    <tr key={customer.id} onClick={() => navigate(buildRoute(ROUTES.ADMIN_CUSTOMER_ORDERS, { id: customer.id }))} style={{ cursor: 'pointer' }}>
                       <td>#{customer.id}</td>
                       <td>{customer.name}</td>
                       <td>{customer.email}</td>

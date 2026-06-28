@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../routes/ROUTES';
 
 const sidebarItems = [
-  { label: 'Dashboard', path: '/admin-dashboard' },
-  { label: 'Entregadores', path: '/admin-delivery-men' },
-  { label: 'Clientes', path: '/admin-clients' },
+  { label: 'Dashboard', path: ROUTES.ADMIN_DASHBOARD },
+  { label: 'Entregadores', path: ROUTES.ADMIN_DELIVERY_MEN },
+  { label: 'Clientes', path: ROUTES.ADMIN_CUSTOMERS_LIST },
 ];
 
-export default function Sidebar({ activePath = '/admin-dashboard' }) {
+export default function Sidebar({ activePath = ROUTES.ADMIN_DASHBOARD }) {
   const navigate = useNavigate();
 
   return (

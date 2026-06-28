@@ -3,6 +3,8 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import OrderDetailsView from '../../components/OrderDetailsView';
 import { clearToken, getUserEmail } from '../../services/auth';
 import { fetchCustomerOrders } from '../../services/customerDashboard.service';
+import { ROUTES, buildRoute } from '../../routes/ROUTES';
+
 
 export default function CustomerOrderDetailsPage() {
   const { id } = useParams();
@@ -41,7 +43,7 @@ export default function CustomerOrderDetailsPage() {
 
   function handleLogout() {
     clearToken();
-    navigate('/', { replace: true });
+    navigate(ROUTES.ROOT, { replace: true });
   }
 
   async function handleDeleteAccount() {
@@ -51,7 +53,7 @@ export default function CustomerOrderDetailsPage() {
     try {
       await deleteCustomerAccount();
       clearToken();
-      navigate('/', { replace: true });
+      navigate(ROUTES.ROOT, { replace: true });
     } catch (err) {
       setError(err.message || 'Erro ao excluir conta');
     }
@@ -85,7 +87,7 @@ export default function CustomerOrderDetailsPage() {
           title={`Detalhes do Pedido #${order.id}`}
           subtitle={order.status}
           order={order}
-          onBack={() => navigate('/cliente-dashboard')}
+          onBack={() => navigate(ROUTES.CUSTOMER_DASHBOARD)}
          profileHeader={
             <>
               <button className="profile-button" type="button" onClick={() => setProfileOpen((prev) => !prev)}>
@@ -97,7 +99,7 @@ export default function CustomerOrderDetailsPage() {
               </button>
               {profileOpen && (
                 <div className="profile-dropdown">
-                  <button type="button" className="profile-dropdown-item" onClick={() => navigate('/cliente/edit')}>
+                  <button type="button" className="profile-dropdown-item" onClick={() => navigate(ROUTES.CUSTOMER_EDIT_PROFILE)}>
                     Editar Perfil
                   </button>
                   <button type="button" className="profile-dropdown-item" onClick={handleDeleteAccount}>

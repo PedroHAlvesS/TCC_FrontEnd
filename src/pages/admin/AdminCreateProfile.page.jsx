@@ -4,6 +4,7 @@ import { clearToken } from '../../services/auth';
 import Sidebar from '../../components/Sidebar';
 import { createAdminProfile } from '../../services/createAdminProfile.service';
 import { validateProfile } from '../../utils/validators';
+import { ROUTES } from '../../routes/ROUTES';
 
 export default function AdminCreateProfilePage() {
   const [name, setName] = useState('');
@@ -96,7 +97,7 @@ export default function AdminCreateProfilePage() {
             </label>
 
             <div className="edit-profile-actions">
-              <button type="button" className="primary-button" onClick={() => navigate('/admin-dashboard')}>Voltar para o Dashboard</button>
+              <button type="button" className="primary-button" onClick={() => navigate(ROUTES.ADMIN_DASHBOARD)}>Voltar para o Dashboard</button>
               <button
                 type="button"
                 className="primary-button"
