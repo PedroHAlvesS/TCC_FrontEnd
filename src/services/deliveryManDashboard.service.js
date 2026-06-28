@@ -36,4 +36,28 @@ export async function fetchDeliveryManProfile() {
   return res.json().catch(() => null);
 }
 
-export default { fetchDeliveryManOrders, fetchDeliveryManProfile };
+export async function updateDeliveryManOrderStatus(orderId, status) {
+  const token = getToken();
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/orders/delivery-man/${orderId}/status`, {
+    method: 'PUT',
+    headers: token
+      ? {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      : {
+          'Content-Type': 'application/json',
+        },
+    body: JSON.stringify({ status }),
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    throw new Error(data?.message || 'Erro ao atualizar status do pedido');
+  }
+
+  return res.json().catch(() => null);
+}
+
+
+export default { fetchDeliveryManOrders, fetchDeliveryManProfile, updateDeliveryManOrderStatus };

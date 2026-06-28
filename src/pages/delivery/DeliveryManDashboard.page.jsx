@@ -4,7 +4,7 @@ import OrdersDashboard from '../../components/OrdersDashboard.component';
 import { clearToken, getUserEmail } from '../../services/auth';
 import { fetchDeliveryManOrders, fetchDeliveryManProfile } from '../../services/deliveryManDashboard.service';
 
-export default function DeliveryManDashboard() {
+export default function DeliveryManDashboardPage() {
   const [orders, setOrders] = useState(null);
   const [deliveryManData, setDeliveryManData] = useState(null);
   const [error, setError] = useState('');
@@ -70,7 +70,7 @@ export default function DeliveryManDashboard() {
           profileHeader={
             <>
               <button className="profile-button" type="button" onClick={() => setProfileOpen((prev) => !prev)}>
-                <span className="profile-avatar">E</span>
+                <span className="profile-avatar">{deliveryManData.name.charAt(0)}</span>
                 <div className="profile-info">
                   <span>{deliveryManData.name}</span>
                   <small>{deliveryManData.profile}</small>
@@ -85,7 +85,11 @@ export default function DeliveryManDashboard() {
               )}
             </>
           }
-          onRowClick={(order) => navigate(`/entregador/pedidos/${order.id}`)}
+          onRowClick={(order) =>
+            navigate(`/entregador/pedidos/${order.id}`, {
+              state: { orders, deliveryManData },
+            })
+          }
         />
       </div>
     </div>

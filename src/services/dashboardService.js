@@ -198,27 +198,4 @@ export async function assignOrderToDeliveryMan(orderId, deliveryManId) {
 }
 
 
-export async function updateDeliveryManOrderStatus(orderId, status, email) {
-  const token = getToken();
-  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/orders/${orderId}/status/${email}`, {
-    method: 'PUT',
-    headers: token
-      ? {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        }
-      : {
-          'Content-Type': 'application/json',
-        },
-    body: JSON.stringify({ status, email }),
-  });
-
-  if (!res.ok) {
-    const data = await res.json().catch(() => null);
-    throw new Error(data?.message || 'Erro ao atualizar status do pedido');
-  }
-
-  return res.json().catch(() => null);
-}
-
-export default { fetchOrders, fetchAdminProfile, fetchDeliveryMen, fetchCustomers, createDeliveryMan, updateDeliveryMan, deleteDeliveryMan, fetchDeliveryManOrders, fetchCustomerOrders,  updateDeliveryManOrderStatus, assignOrderToDeliveryMan };
+export default { fetchOrders, fetchAdminProfile, fetchDeliveryMen, fetchCustomers, createDeliveryMan, updateDeliveryMan, deleteDeliveryMan, fetchDeliveryManOrders, fetchCustomerOrders,  assignOrderToDeliveryMan };
