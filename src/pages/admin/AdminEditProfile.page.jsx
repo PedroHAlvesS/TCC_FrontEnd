@@ -121,7 +121,7 @@ export default function AdminEditProfilePage() {
               </div>
             </label>
             <div className="edit-profile-actions">
-              <button type="button" className="primary-button" onClick={() => navigate('/dashboard')}>
+              <button type="button" className="primary-button" onClick={() => navigate('/admin-dashboard')}>
                 Voltar para o Dashboard
               </button>
               <button

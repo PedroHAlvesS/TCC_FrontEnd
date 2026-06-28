@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createClientProfile } from '../services/CreateClientProfile';
+import { createClientProfile } from '../services/createClientProfile.service';
 import { validateProfile } from '../utils/validators';
 
 export default function CreateCustomerProfilePage() {

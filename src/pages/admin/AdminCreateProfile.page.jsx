@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { clearToken } from '../../services/auth';
 import Sidebar from '../../components/Sidebar';
-import { createAdminProfile } from '../../services/CreateAdminProfile';
+import { createAdminProfile } from '../../services/createAdminProfile.service';
 import { validateProfile } from '../../utils/validators';
 
 export default function AdminCreateProfilePage() {
@@ -96,7 +96,7 @@ export default function AdminCreateProfilePage() {
             </label>
 
             <div className="edit-profile-actions">
-              <button type="button" className="primary-button" onClick={() => navigate('/dashboard')}>Voltar para o Dashboard</button>
+              <button type="button" className="primary-button" onClick={() => navigate('/admin-dashboard')}>Voltar para o Dashboard</button>
               <button
                 type="button"
                 className="primary-button"

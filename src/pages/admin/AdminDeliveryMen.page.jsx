@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import { fetchDeliveryMen, fetchAdminProfile, createDeliveryMan, updateDeliveryMan, deleteDeliveryMan } from '../services/dashboardService';
-import { clearToken } from '../services/auth';
-import { validateProfile } from '../utils/validators';
+import Sidebar from '../../components/Sidebar';
+import { fetchDeliveryMen, fetchAdminProfile, createDeliveryMan, updateDeliveryMan, deleteDeliveryMan } from '../../services/dashboardService';
+import { clearToken } from '../../services/auth';
+import { validateProfile } from '../../utils/validators';
 
 function formatPhone(phone) {
   if (!phone) return '-';
@@ -22,7 +22,7 @@ function formatDate(dateString) {
   });
 }
 
-export default function DeliveryMen() {
+export default function AdminDeliveryMenPage() {
   const [deliveryMen, setDeliveryMen] = useState(null);
   const [admin, setAdmin] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
