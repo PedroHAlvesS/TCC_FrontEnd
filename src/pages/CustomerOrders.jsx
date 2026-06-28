@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import CustomerDetailsCard from '../components/CustomerDetailsCard';
 import { clearToken } from '../services/auth';
-import { fetchAdminProfile, fetchCustomers, fetchCustomerOrders } from '../services/dashboardService';
+import { fetchAdminProfile, fetchCustomers, fetchCustomerOrders } from '../services/adminDashboard.service';
 
 function formatDate(dateString) {
   if (!dateString) return '-';

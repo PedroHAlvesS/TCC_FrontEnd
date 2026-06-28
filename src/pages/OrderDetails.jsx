@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import OrderDetailsView from '../components/OrderDetailsView';
-import { fetchOrders, fetchAdminProfile, fetchDeliveryMen, assignOrderToDeliveryMan } from '../services/dashboardService';
+import { fetchOrders, fetchAdminProfile, fetchDeliveryMen, assignOrderToDeliveryMan } from '../services/adminDashboard.service';
 import { clearToken } from '../services/auth';
 
 export default function OrderDetails() {

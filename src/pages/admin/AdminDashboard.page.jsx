@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import OrdersDashboardComponent from '../../components/OrdersDashboard.component';
-import { fetchOrders, fetchAdminProfile } from '../../services/dashboardService';
+import { fetchOrders, fetchAdminProfile } from '../../services/adminDashboard.service';
 import { clearToken } from '../../services/auth';
 
 export default function AdminDashboardPage() {

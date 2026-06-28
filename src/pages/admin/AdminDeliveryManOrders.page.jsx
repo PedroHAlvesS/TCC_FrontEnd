@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import DeliveryManDetailsCard from '../components/DeliveryManDetailsCard';
-import { clearToken } from '../services/auth';
-import { fetchAdminProfile, fetchDeliveryMen, fetchDeliveryManOrders, deleteDeliveryMan } from '../services/dashboardService';
+import Sidebar from '../../components/Sidebar';
+import DeliveryManDetailsCard from '../../components/DeliveryManDetailsCard';
+import { clearToken } from '../../services/auth';
+import { fetchAdminProfile, fetchDeliveryMen, fetchDeliveryManOrders, deleteDeliveryMan } from '../../services/adminDashboard.service';
 
 function formatDate(dateString) {
   if (!dateString) return '-';
@@ -16,7 +16,7 @@ function formatDate(dateString) {
   });
 }
 
-export default function DeliveryManOrders() {
+export default function AdminDeliveryManOrdersPage() {
   const { id } = useParams();
   const [admin, setAdmin] = useState(null);
   const [deliveryMan, setDeliveryMan] = useState(null);
@@ -83,7 +83,7 @@ export default function DeliveryManOrders() {
     try {
       await deleteDeliveryMan(deliveryMan.id);
       setSuccessMessage('Entregador excluído com sucesso.');
-      setTimeout(() => navigate('/entregadores'), 700);
+      setTimeout(() => navigate('/admin-delivery-men'), 700);
     } catch (err) {
       setError(err?.message || 'Erro ao excluir entregador');
     } finally {
@@ -92,7 +92,7 @@ export default function DeliveryManOrders() {
   }
 
   function handleEditCurrentDeliveryMan() {
-    navigate('/entregadores', { state: { editDeliveryManId: deliveryMan?.id } });
+    navigate('/admin-delivery-men', { state: { editDeliveryManId: deliveryMan?.id } });
   }
 
   if (loading) {
@@ -118,10 +118,10 @@ export default function DeliveryManOrders() {
 
   return (
     <div className="page-shell dashboard-shell">
-      <Sidebar activePath="/entregadores" />
+      <Sidebar activePath="/admin-delivery-men" />
       <div className="dashboard-main">
         <div className="page-actions-row">
-          <button type="button" className="secondary-button" onClick={() => navigate('/entregadores')}>
+          <button type="button" className="secondary-button" onClick={() => navigate('/admin-delivery-men')}>
             ← Voltar para entregadores
           </button>
         </div>
@@ -130,15 +130,6 @@ export default function DeliveryManOrders() {
           <div>
             <div className="dashboard-title">Detalhes do Entregador</div>
             <div className="dashboard-subtitle">Pedidos atribuídos e informações do entregador.</div>
-          </div>
-          <div className="profile-menu-container">
-            <button className="profile-button" onClick={handleLogout}>
-              <span className="profile-avatar">{admin?.name?.charAt(0) || 'A'}</span>
-              <div className="profile-info">
-                <span>{admin?.name}</span>
-                <small>Administrador</small>
-              </div>
-            </button>
           </div>
         </header>
 
@@ -188,11 +179,11 @@ export default function DeliveryManOrders() {
               Filtrar status
               <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
                 <option value="">Todos os status</option>
-                <option value="PENDING">Pendente</option>
-                <option value="ASSIGNED">Atribuído</option>
-                <option value="IN_TRANSIT">Em trânsito</option>
-                <option value="DELIVERED">Entregue</option>
-                <option value="CANCELED">Cancelado</option>
+                <option value="Pendente">Pendente</option>
+                <option value="Atribuído">Atribuído</option>
+                <option value="Em trânsito">Em trânsito</option>
+                <option value="Entregue">Entregue</option>
+                <option value="Cancelado">Cancelado</option>
               </select>
             </label>
           </div>
@@ -206,7 +197,6 @@ export default function DeliveryManOrders() {
                   <th>Endereço de Entrega</th>
                   <th>Data do Pedido</th>
                   <th>Status</th>
-                  <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -226,15 +216,6 @@ export default function DeliveryManOrders() {
                       </td>
                       <td onClick={() => navigate(`/pedidos/${order.id}`)}>{formatDate(order.creationDate)}</td>
                       <td onClick={() => navigate(`/pedidos/${order.id}`)}>{order.status}</td>
-                      <td>
-                        <button
-                          type="button"
-                          className="action-button"
-                          onClick={() => navigate(`/pedidos/${order.id}`)}
-                        >
-                          Ver Detalhes
-                        </button>
-                      </td>
                     </tr>
                   ))
                 )}

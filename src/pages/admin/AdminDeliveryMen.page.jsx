@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
-import { fetchDeliveryMen, fetchAdminProfile, createDeliveryMan, updateDeliveryMan, deleteDeliveryMan } from '../../services/dashboardService';
+import { fetchDeliveryMen, fetchAdminProfile, createDeliveryMan, updateDeliveryMan, deleteDeliveryMan } from '../../services/adminDashboard.service';
 import { clearToken } from '../../services/auth';
 import { validateProfile } from '../../utils/validators';
 
@@ -112,7 +112,7 @@ export default function AdminDeliveryMenPage() {
     setCreateError('');
     setSuccessMessage('');
 
-    const validation = validateProfile({ email: newEmail, phone: newPhone, password: newPassword }, { requirePassword: true });
+    const validation = validateProfile({ email: newEmail, phone: newPhone, password: newPassword });
     if (!newName.trim()) {
       validation.errors.name = 'Nome é obrigatório';
     }
@@ -307,7 +307,7 @@ export default function AdminDeliveryMenPage() {
                       <td>{formatDate(deliveryMan.createdAt)}</td>
                       <td>
                         <div className="table-actions">
-                          <button type="button" className="action-button" onClick={() => navigate(`/entregadores/pedidos/${deliveryMan.id}`)}>
+                          <button type="button" className="action-button" onClick={() => navigate(`/admin-delivery-men/orders/${deliveryMan.id}`)}>
                             👁️
                           </button>
                           <button type="button" className="action-button" onClick={() => openEditDrawer(deliveryMan)}>

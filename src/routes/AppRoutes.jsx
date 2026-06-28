@@ -11,7 +11,7 @@ import DeliveryManOrderDetailsPage from '../pages/delivery/DeliveryManOrderDetai
 import BlankPage from '../pages/BlankPage';
 import AdminDashboardPage from '../pages/admin/AdminDashboard.page';
 import OrderDetails from '../pages/OrderDetails';
-import DeliveryManOrders from '../pages/DeliveryManOrders';
+import AdminDeliveryManOrdersPage from '../pages/admin/AdminDeliveryManOrders.page';
 import Customers from '../pages/Customers';
 import CustomerOrders from '../pages/CustomerOrders';
 import AdminEditProfilePage from '../pages/admin/AdminEditProfile.page';
@@ -33,7 +33,8 @@ export default function AppRoutes() {
           <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
           <Route path="/admin/edit" element={<AdminEditProfilePage />} />
           <Route path="/admin/create" element={<AdminCreateProfilePage />} />
-          <Route path="/entregadores" element={<AdminDeliveryMenPage />} />
+          <Route path="/admin-delivery-men" element={<AdminDeliveryMenPage />} />
+          <Route path="/admin-delivery-men/orders/:id" element={<AdminDeliveryManOrdersPage />} />
         </Route>
 
         {/* protected customer routes */}
@@ -53,7 +54,7 @@ export default function AppRoutes() {
         {/* protected routes */}
         <Route element={<RequireAuth />}>
           
-          <Route path="/entregadores/pedidos/:id" element={<DeliveryManOrders />} />
+          
           <Route path="/clientes" element={<Customers />} />
           <Route path="/clientes/pedidos/:id" element={<CustomerOrders />} />
           <Route path="/pedidos/:id" element={<OrderDetails />} />

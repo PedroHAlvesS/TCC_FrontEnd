@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchAdminProfile } from '../../services/dashboardService';
+import { fetchAdminProfile } from '../../services/adminDashboard.service';
 import { clearToken, setUserEmail } from '../../services/auth';
 import Sidebar from '../../components/Sidebar';
 import { updateAdminProfile } from '../../services/editAdminProfile.service';
