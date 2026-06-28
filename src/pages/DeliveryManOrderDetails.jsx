@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import OrderDetailsView from '../components/OrderDetailsView';
 import { clearToken, getUserEmail } from '../services/auth';
-import { fetchDeliveryManOrdersByEmail, updateDeliveryManOrderStatus } from '../services/dashboardService';
+import { updateDeliveryManOrderStatus } from '../services/dashboardService';
+import { fetchDeliveryManOrders } from '../services/deliveryManDashboard.service';
 
 export default function DeliveryManOrderDetails() {
   const { id } = useParams();
@@ -18,7 +19,7 @@ export default function DeliveryManOrderDetails() {
     let mounted = true;
     const email = getUserEmail();
 
-    fetchDeliveryManOrdersByEmail(email)
+    fetchDeliveryManOrders()
       .then((orders) => {
         if (!mounted) return;
         const selected = orders.find((item) => String(item.id) === String(id));

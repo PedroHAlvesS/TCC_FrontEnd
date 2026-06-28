@@ -20,12 +20,8 @@ export async function fetchOrders() {
 
 export async function fetchAdminProfile() {
   const token = getToken();
-  const email = getUserEmail();
-  if (!email) {
-    throw new Error('Email de admin não encontrado');
-  }
 
-  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admins/email/${encodeURIComponent(email)}`, {
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admins`, {
     headers: token
       ? {
           Authorization: `Bearer ${token}`,
@@ -201,41 +197,6 @@ export async function assignOrderToDeliveryMan(orderId, deliveryManId) {
   return res.json().catch(() => null);
 }
 
-export async function fetchCustomerOrdersByEmail(email) {
-  const token = getToken();
-  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/orders/customer/email/${email}`, {
-    headers: token
-      ? {
-          Authorization: `Bearer ${token}`,
-        }
-      : {},
-  });
-
-  if (!res.ok) {
-    const data = await res.json().catch(() => null);
-    throw new Error(data?.message || 'Erro ao obter pedidos do cliente');
-  }
-
-  return res.json().catch(() => null);
-}
-
-export async function fetchDeliveryManOrdersByEmail(email) {
-  const token = getToken();
-  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/orders/delivery-man/email/${encodeURIComponent(email)}`, {
-    headers: token
-      ? {
-          Authorization: `Bearer ${token}`,
-        }
-      : {},
-  });
-
-  if (!res.ok) {
-    const data = await res.json().catch(() => null);
-    throw new Error(data?.message || 'Erro ao obter pedidos do entregador');
-  }
-
-  return res.json().catch(() => null);
-}
 
 export async function updateDeliveryManOrderStatus(orderId, status, email) {
   const token = getToken();
@@ -260,4 +221,4 @@ export async function updateDeliveryManOrderStatus(orderId, status, email) {
   return res.json().catch(() => null);
 }
 
-export default { fetchOrders, fetchAdminProfile, fetchDeliveryMen, fetchCustomers, createDeliveryMan, updateDeliveryMan, deleteDeliveryMan, fetchDeliveryManOrders, fetchCustomerOrders, fetchCustomerOrdersByEmail, fetchDeliveryManOrdersByEmail, updateDeliveryManOrderStatus, assignOrderToDeliveryMan };
+export default { fetchOrders, fetchAdminProfile, fetchDeliveryMen, fetchCustomers, createDeliveryMan, updateDeliveryMan, deleteDeliveryMan, fetchDeliveryManOrders, fetchCustomerOrders,  updateDeliveryManOrderStatus, assignOrderToDeliveryMan };

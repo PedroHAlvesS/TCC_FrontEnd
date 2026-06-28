@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleLogin } from '../controllers/authController';
-import LoginComponent from '../components/Login.component';
+import { handleLogin } from '../../controllers/authController';
+import LoginComponent from '../../components/Login.component';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
@@ -16,7 +16,7 @@ export default function AdminLoginPage() {
     await handleLogin({
       email,
       password,
-      onSuccess: () => navigate('/dashboard', { replace: true }),
+      onSuccess: () => navigate('/admin-dashboard', { replace: true }),
       onError: setError,
     });
   }

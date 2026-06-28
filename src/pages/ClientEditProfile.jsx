@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { clearToken, getUserEmail, setUserEmail } from '../services/auth';
-import { fetchCustomerProfileByEmail, updateCustomerProfile } from '../services/CustomerProfileService';
+import { fetchCustomerProfile, updateCustomerProfile } from '../services/customerProfile.service';
 import { validateProfile } from '../utils/validators';
 import ProfileEditForm from '../components/ProfileEditForm';
 
@@ -20,9 +20,8 @@ export default function ClientEditProfile() {
 
   useEffect(() => {
     let mounted = true;
-    const emailKey = getUserEmail();
 
-    fetchCustomerProfileByEmail(emailKey)
+    fetchCustomerProfile()
       .then((data) => {
         if (!mounted) return;
         setCustomer(data);

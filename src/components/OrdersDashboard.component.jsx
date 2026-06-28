@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-export default function OrdersDashboard({
+export default function OrdersDashboardComponent({
   title,
   subtitle,
   orders,
@@ -17,10 +17,10 @@ export default function OrdersDashboard({
 
   const stats = useMemo(
     () => ({
-      pending: orders.filter((order) => order.status === 'PENDING').length,
-      assigned: orders.filter((order) => order.status === 'ASSIGNED').length,
-      inTransit: orders.filter((order) => order.status === 'IN_TRANSIT').length,
-      delivered: orders.filter((order) => order.status === 'DELIVERED').length,
+      pending: orders.filter((order) => order.status === 'Pendente').length,
+      assigned: orders.filter((order) => order.status === 'Atribuído').length,
+      inTransit: orders.filter((order) => order.status === 'Em Trânsito').length,
+      delivered: orders.filter((order) => order.status === 'Entregue').length,
     }),
     [orders]
   );
@@ -82,10 +82,10 @@ export default function OrdersDashboard({
             <label>
               Status
               <select value={filterStatus} onChange={(event) => setFilterStatus(event.target.value)}>
-                <option value="PENDING">PENDING</option>
-                <option value="ASSIGNED">ASSIGNED</option>
-                <option value="IN_TRANSIT">IN_TRANSIT</option>
-                <option value="DELIVERED">DELIVERED</option>
+                <option value="Pendente">Pendente</option>
+                <option value="Atribuído">Atribuído</option>
+                <option value="Em Trânsito">Em Trânsito</option>
+                <option value="Entregue">Entregue</option>
               </select>
             </label>
           </div>

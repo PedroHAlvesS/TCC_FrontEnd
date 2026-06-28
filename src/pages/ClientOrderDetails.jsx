@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import OrderDetailsView from '../components/OrderDetailsView';
 import { clearToken, getUserEmail } from '../services/auth';
-import { fetchCustomerOrdersByEmail } from '../services/dashboardService';
+import { fetchCustomerOrders } from '../services/customerDashboard.service';
 
 export default function ClientOrderDetails() {
   const { id } = useParams();
@@ -15,7 +15,7 @@ export default function ClientOrderDetails() {
     let mounted = true;
     const email = getUserEmail();
 
-    fetchCustomerOrdersByEmail(email)
+    fetchCustomerOrders(email)
       .then((orders) => {
         if (!mounted) return;
         const selected = orders.find((item) => String(item.id) === String(id));

@@ -2,9 +2,9 @@ import { getToken, getUserEmail } from './auth';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080';
 
-export async function fetchCustomerProfileByEmail(email) {
+export async function fetchCustomerProfile() {
   const token = getToken();
-  const res = await fetch(`${BACKEND_URL}/api/customers/email/${encodeURIComponent(email)}`, {
+  const res = await fetch(`${BACKEND_URL}/api/customers/email`, {
     headers: token
       ? {
           Authorization: `Bearer ${token}`,
@@ -41,9 +41,9 @@ export async function updateCustomerProfile(customerId, profileData) {
   return res.json().catch(() => null);
 }
 
-export async function deleteCustomerAccount(customerId) {
+export async function deleteCustomerAccount() {
   const token = getToken();
-  const res = await fetch(`${BACKEND_URL}/api/customers/${customerId}`, {
+  const res = await fetch(`${BACKEND_URL}/api/customers`, {
     method: 'DELETE',
     headers: token
       ? {

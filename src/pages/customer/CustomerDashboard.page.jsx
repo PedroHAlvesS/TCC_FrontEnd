@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { clearToken, getUserEmail } from '../services/auth';
-import { fetchCustomerOrdersByEmail } from '../services/dashboardService';
-import { fetchCustomerProfileByEmail, deleteCustomerAccount } from '../services/CustomerProfileService';
-import OrdersDashboard from '../components/OrdersDashboard';
+import { clearToken, getUserEmail } from '../../services/auth';
+import { fetchCustomerOrders } from '../../services/customerDashboard.service';
+import { fetchCustomerProfile, deleteCustomerAccount } from '../../services/customerProfile.service';
+import OrdersDashboardComponent from '../../components/OrdersDashboard.component';
 
-export default function ClientDashboard() {
+export default function CustomerDashboardPage() {
   const [orders, setOrders] = useState(null);
+  const [customerData, setCustomerData] = useState(null);
   const [error, setError] = useState('');
   const [profileOpen, setProfileOpen] = useState(false);
   const navigate = useNavigate();
@@ -14,10 +15,10 @@ export default function ClientDashboard() {
   useEffect(() => {
     let mounted = true;
 
-    const email = getUserEmail();
-    fetchCustomerOrdersByEmail(email)
-      .then((orderData) => {
+    Promise.all([fetchCustomerProfile(), fetchCustomerOrders()])
+      .then(([customerProfileData, orderData]) => {
         if (!mounted) return;
+        setCustomerData(customerProfileData);
         setOrders(orderData);
       })
       .catch((err) => {
@@ -28,6 +29,7 @@ export default function ClientDashboard() {
     return () => {
       mounted = false;
     };
+
   }, []);
 
   function handleLogout() {
@@ -40,8 +42,7 @@ export default function ClientDashboard() {
     if (!confirmed) return;
 
     try {
-      const profile = await fetchCustomerProfileByEmail(getUserEmail());
-      await deleteCustomerAccount(profile.id);
+      await deleteCustomerAccount();
       clearToken();
       navigate('/', { replace: true });
     } catch (err) {
@@ -73,7 +74,7 @@ export default function ClientDashboard() {
   return (
     <div className="page-shell dashboard-shell">
       <div className="dashboard-main">
-        <OrdersDashboard
+        <OrdersDashboardComponent
           title="Painel do Cliente"
           subtitle="Confira seus pedidos"
           orders={orders}
@@ -85,8 +86,8 @@ export default function ClientDashboard() {
               <button className="profile-button" type="button" onClick={() => setProfileOpen((prev) => !prev)}>
                 <span className="profile-avatar">C</span>
                 <div className="profile-info">
-                  <span>{getUserEmail() || 'Cliente'}</span>
-                  <small>Conta do cliente</small>
+                  <span>{customerData.name}</span>
+                  <small>{customerData.profile}</small>
                 </div>
               </button>
               {profileOpen && (

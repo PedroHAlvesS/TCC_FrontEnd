@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import AdminLoginPage from '../pages/AdminLogin.page';
-import CustomerLoginPage from '../pages/CustomerLogin.page';
+import AdminLoginPage from '../pages/admin/AdminLogin.page';
+import CustomerLoginPage from '../pages/customer/CustomerLogin.page';
 import CreateClientProfile from '../pages/CreateClientProfile';
-import DeliveryManLoginPage from '../pages/DeliveryManLogin.page';
-import ClientDashboard from '../pages/ClientDashboard';
+import DeliveryManLoginPage from '../pages/delivery/DeliveryManLogin.page';
+import CustomerDashboardPage from '../pages/customer/CustomerDashboard.page';
 import ClientEditProfile from '../pages/ClientEditProfile';
 import ClientOrderDetails from '../pages/ClientOrderDetails';
-import DeliveryManDashboard from '../pages/DeliveryManDashboard';
+import DeliveryManDashboard from '../pages/delivery/DeliveryManDashboard';
 import DeliveryManOrderDetails from '../pages/DeliveryManOrderDetails';
 import BlankPage from '../pages/BlankPage';
-import Dashboard from '../pages/Dashboard';
+import AdminDashboardPage from '../pages/admin/AdminDashboard.page';
 import OrderDetails from '../pages/OrderDetails';
 import DeliveryManOrders from '../pages/DeliveryManOrders';
 import Customers from '../pages/Customers';
@@ -28,9 +28,23 @@ export default function AppRoutes() {
         <Route path="/admin" element={<AdminLoginPage />} />
         <Route path="/entregador" element={<DeliveryManLoginPage />} />
 
+        {/* protected admin routes */}
+        <Route element={<RequireAuth redirectTo="/admin" />}>
+          <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+        </Route>
+
+        {/* protected customer routes */}
+        <Route element={<RequireAuth redirectTo="/" />}>
+          <Route path="/cliente-dashboard" element={<CustomerDashboardPage />} />
+        </Route>
+
+        {/* protected delivery man routes */}
+        <Route element={<RequireAuth redirectTo="/entregador" />}>
+          <Route path="/entregador-dashboard" element={<DeliveryManDashboard />} />
+        </Route>
+
         {/* protected routes */}
         <Route element={<RequireAuth />}>
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/entregadores" element={<DeliveryMen />} />
           <Route path="/entregadores/pedidos/:id" element={<DeliveryManOrders />} />
           <Route path="/clientes" element={<Customers />} />
@@ -39,11 +53,9 @@ export default function AppRoutes() {
           <Route path="/admin/blank" element={<BlankPage />} />
           <Route path="/admin/edit" element={<EditProfile />} />
           <Route path="/admin/create" element={<CreateProfile />} />
-          <Route path="/cliente-dashboard" element={<ClientDashboard />} />
           <Route path="/cliente/edit" element={<ClientEditProfile />} />
           <Route path="/cliente/create-pedido" element={<CreateOrderPage />} />
           <Route path="/cliente/pedidos/:id" element={<ClientOrderDetails />} />
-          <Route path="/entregador-dashboard" element={<DeliveryManDashboard />} />
           <Route path="/entregador/pedidos/:id" element={<DeliveryManOrderDetails />} />
         </Route>
 

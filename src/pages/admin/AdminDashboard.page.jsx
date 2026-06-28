@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import OrdersDashboard from '../components/OrdersDashboard';
-import { fetchOrders, fetchAdminProfile } from '../services/dashboardService';
-import { clearToken } from '../services/auth';
+import Sidebar from '../../components/Sidebar';
+import OrdersDashboardComponent from '../../components/OrdersDashboard.component';
+import { fetchOrders, fetchAdminProfile } from '../../services/dashboardService';
+import { clearToken } from '../../services/auth';
 
-export default function Dashboard() {
+export default function AdminDashboardPage() {
   const [orders, setOrders] = useState(null);
   const [admin, setAdmin] = useState(null);
   const [error, setError] = useState('');
@@ -61,7 +61,7 @@ export default function Dashboard() {
     <div className="page-shell dashboard-shell">
       <Sidebar activePath="/dashboard" />
       <div className="dashboard-main">
-        <OrdersDashboard
+        <OrdersDashboardComponent
           title="Dashboard"
           subtitle="Aqui está o resumo do sistema."
           orders={orders}
@@ -71,7 +71,7 @@ export default function Dashboard() {
                 <span className="profile-avatar">{admin.name.charAt(0)}</span>
                 <div className="profile-info">
                   <span>{admin.name}</span>
-                  <small>Administrador</small>
+                  <small>{admin.profile}</small>
                 </div>
               </button>
               {profileOpen && (

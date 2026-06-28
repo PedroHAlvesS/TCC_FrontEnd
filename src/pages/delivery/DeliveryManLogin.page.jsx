@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleLogin } from '../controllers/authController';
-import LoginComponent from '../components/Login.component';
+import { handleLogin } from '../../controllers/authController';
+import LoginComponent from '../../components/Login.component';
 
 export default function DeliveryManLoginPage() {
   const [email, setEmail] = useState('');
