@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchAdminProfile } from '../services/dashboardService';
-import { clearToken, setUserEmail } from '../services/auth';
-import Sidebar from '../components/Sidebar';
-import { updateAdminProfile } from '../services/EditAdminProfile';
-import { validateProfile } from '../utils/validators';
-import ProfileEditForm from '../components/ProfileEditForm';
+import { fetchAdminProfile } from '../../services/dashboardService';
+import { clearToken, setUserEmail } from '../../services/auth';
+import Sidebar from '../../components/Sidebar';
+import { updateAdminProfile } from '../../services/editAdminProfile.service';
+import { validateProfile } from '../../utils/validators';
+import ProfileEditForm from '../../components/ProfileEditForm';
 
-export default function EditProfile() {
-  const [admin, setAdmin] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function AdminEditProfilePage() {
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -20,38 +19,13 @@ export default function EditProfile() {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    let mounted = true;
-
-    fetchAdminProfile()
-      .then((data) => {
-        if (!mounted) return;
-        setAdmin(data);
-        setEmail(data.email || '');
-        setPhone(data.phoneNumber || '');
-        // make sure password field is always empty on load
-        setPassword('');
-      })
-      .catch((err) => {
-        if (!mounted) return;
-        setError(err.message || 'Erro ao carregar perfil');
-      })
-      .finally(() => {
-        if (mounted) setLoading(false);
-      });
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   async function handleEditProfile() {
-    if (!admin) return;
     setSaving(true);
     setErrorMessage('');
     setSuccessMessage('');
     // validate email and phone; password validated only if provided
-    const { valid, errors } = validateProfile({ email, phone, password }, { requirePassword: false });
+    const { valid, errors } = validateProfile({ email, phone, password });
     if (!valid) {
       const first = errors.email || errors.phone || errors.password;
       setErrorMessage(first);
@@ -64,14 +38,12 @@ export default function EditProfile() {
         phoneNumber: phone || null,
         password: password || null,
       };
-      await updateAdminProfile(admin.id, payload);
-      setSuccessMessage('Alterado com sucesso');
-      if (email && email !== admin.email) {
-        setUserEmail(email);
-      }
+      await updateAdminProfile(payload);
+      setSuccessMessage('Alterado com sucesso. Você será deslogado em 2 segundos...');
 
-      setAdmin((prev) => ({ ...prev, email, phoneNumber: phone }));
-      setPassword('');
+      window.setTimeout(() => {
+        handleLogout();
+      }, 2000);
     } catch (err) {
       setErrorMessage(err?.message || 'Erro ao salvar alterações');
     } finally {
@@ -107,24 +79,7 @@ export default function EditProfile() {
 
   return (
     <div className="page-shell dashboard-shell">
-      <Sidebar activePath="/admin/edit" />
       <div className="dashboard-main">
-        <header className="dashboard-header">
-          <div>
-            <div className="dashboard-title">Editar Perfil</div>
-            <div className="dashboard-subtitle">Atualize suas informações pessoais.</div>
-          </div>
-
-          <div className="profile-menu-container">
-            <button className="profile-button" onClick={handleLogout}>
-              <span className="profile-avatar">{admin.name?.charAt(0) || 'A'}</span>
-              <div className="profile-info">
-                <span>{admin.name}</span>
-                <small>Administrador</small>
-              </div>
-            </button>
-          </div>
-        </header>
 
         <section className="edit-profile-card">
           {successMessage && (
@@ -145,11 +100,11 @@ export default function EditProfile() {
           <div className="edit-profile-form">
             <label>
               E-mail
-              <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
+              <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder='Digite seu novo e-mail' />
             </label>
             <label>
               Telefone
-              <input type="text" value={phone} onChange={(event) => setPhone(event.target.value)} />
+              <input type="text" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder='Digite seu novo telefone' />
             </label>
             <label>
               Senha
