@@ -4,7 +4,6 @@ const sidebarItems = [
   { label: 'Dashboard', path: '/admin-dashboard' },
   { label: 'Entregadores', path: '/admin-delivery-men' },
   { label: 'Clientes', path: '/admin-clients' },
-  { label: 'Relatórios', path: '#' },
 ];
 
 export default function Sidebar({ activePath = '/admin-dashboard' }) {

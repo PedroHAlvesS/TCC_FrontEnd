@@ -46,11 +46,6 @@ export default function AdminOrderDetailsPage() {
     };
   }, [id]);
 
-  function handleLogout() {
-    clearToken();
-    navigate('/admin', { replace: true });
-  }
-
   async function handleAssignOrder() {
     if (!selectedDeliveryManId) {
       setError('Selecione um entregador');
@@ -65,7 +60,7 @@ export default function AdminOrderDetailsPage() {
       await assignOrderToDeliveryMan(order.id, selectedDeliveryManId);
       setSuccessMessage('Pedido atribuído ao entregador com sucesso!');
       setTimeout(() => {
-        navigate('/dashboard');
+        navigate('/admin-dashboard');
       }, 2000);
     } catch (err) {
       setError(err.message || 'Erro ao atribuir pedido ao entregador');
@@ -111,7 +106,7 @@ export default function AdminOrderDetailsPage() {
           assignmentSection={
             <>
               <div className="order-assign-title">Atribuir Entregador</div>
-              {order.status !== 'PENDING' ? (
+              {order.status !== 'Pendente' ? (
                 <div className="order-assign-empty">
                   <strong>Entregador atribuído:</strong>
                   <div>{order.deliveryManName || 'Nome do entregador não informado'}</div>
