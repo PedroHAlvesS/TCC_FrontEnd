@@ -10,7 +10,7 @@ export default function OrdersDashboardComponent({
   showNameFilter = true,
   showCreateOrderButton = false,
   onCreateOrder,
-  initialStatus = 'PENDING',
+  initialStatus = 'Pendente',
 }) {
   const [filterStatus, setFilterStatus] = useState(initialStatus);
   const [searchTerm, setSearchTerm] = useState('');
