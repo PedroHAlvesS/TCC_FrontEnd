@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import OrderDetailsView from '../components/OrderDetailsView';
-import { fetchOrders, fetchAdminProfile, fetchDeliveryMen, assignOrderToDeliveryMan } from '../services/adminDashboard.service';
-import { clearToken } from '../services/auth';
+import Sidebar from '../../components/Sidebar';
+import OrderDetailsView from '../../components/OrderDetailsView';
+import { fetchOrders, fetchAdminProfile, fetchDeliveryMen, assignOrderToDeliveryMan } from '../../services/adminDashboard.service';
+import { clearToken } from '../../services/auth';
 
-export default function OrderDetails() {
+export default function AdminOrderDetailsPage() {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
   const [admin, setAdmin] = useState(null);
@@ -97,22 +97,13 @@ export default function OrderDetails() {
 
   return (
     <div className="page-shell dashboard-shell">
-      <Sidebar activePath="/dashboard" />
+      <Sidebar activePath="/admin-dashboard" />
       <div className="dashboard-main">
         <OrderDetailsView
           title={`Detalhes do Pedido #${order.id}`}
           subtitle={order.status}
           order={order}
-          onBack={() => navigate('/dashboard')}
-          profileHeader={
-            <button className="profile-button" onClick={handleLogout}>
-              <span className="profile-avatar">{admin?.name?.charAt(0) || 'A'}</span>
-              <div className="profile-info">
-                <span>{admin?.name}</span>
-                <small>Administrador</small>
-              </div>
-            </button>
-          }
+          onBack={() => navigate('/admin-dashboard')}
           successMessage={successMessage}
           errorMessage={error}
           onClearError={() => setError('')}

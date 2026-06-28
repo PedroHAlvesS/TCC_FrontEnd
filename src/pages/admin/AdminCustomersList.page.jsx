@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import { fetchCustomers, fetchAdminProfile } from '../services/adminDashboard.service';
-import { clearToken } from '../services/auth';
+import Sidebar from '../../components/Sidebar';
+import { fetchCustomers, fetchAdminProfile } from '../../services/adminDashboard.service';
+import { clearToken } from '../../services/auth';
 
 function formatPhone(phone) {
   if (!phone) return '-';
@@ -21,7 +21,7 @@ function formatDate(dateString) {
   });
 }
 
-export default function Customers() {
+export default function AdminCustomersListPage() {
   const [customers, setCustomers] = useState(null);
   const [admin, setAdmin] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');

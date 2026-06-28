@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import CustomerDetailsCard from '../components/CustomerDetailsCard';
-import { clearToken } from '../services/auth';
-import { fetchAdminProfile, fetchCustomers, fetchCustomerOrders } from '../services/adminDashboard.service';
+import Sidebar from '../../components/Sidebar';
+import CustomerDetailsCard from '../../components/CustomerDetailsCard';
+import { clearToken } from '../../services/auth';
+import { fetchAdminProfile, fetchCustomers, fetchCustomerOrders } from '../../services/adminDashboard.service';
 
 function formatDate(dateString) {
   if (!dateString) return '-';
@@ -16,7 +16,7 @@ function formatDate(dateString) {
   });
 }
 
-export default function CustomerOrders() {
+export default function AdminCustomerOrdersPage() {
   const { id } = useParams();
   const [admin, setAdmin] = useState(null);
   const [customer, setCustomer] = useState(null);
@@ -97,7 +97,7 @@ export default function CustomerOrders() {
       <Sidebar activePath="/clientes" />
       <div className="dashboard-main">
         <div className="page-actions-row">
-          <button type="button" className="secondary-button" onClick={() => navigate('/clientes')}>
+          <button type="button" className="secondary-button" onClick={() => navigate('/admin-clients')}>
             ← Voltar para clientes
           </button>
         </div>
@@ -106,15 +106,6 @@ export default function CustomerOrders() {
           <div>
             <div className="dashboard-title">Pedidos do Cliente</div>
             <div className="dashboard-subtitle">Veja todos os pedidos feitos por este cliente.</div>
-          </div>
-          <div className="profile-menu-container">
-            <button className="profile-button" onClick={handleLogout}>
-              <span className="profile-avatar">{admin?.name?.charAt(0) || 'A'}</span>
-              <div className="profile-info">
-                <span>{admin?.name}</span>
-                <small>Administrador</small>
-              </div>
-            </button>
           </div>
         </header>
 
@@ -142,11 +133,11 @@ export default function CustomerOrders() {
               Filtrar status
               <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
                 <option value="">Todos os status</option>
-                <option value="PENDING">Pendente</option>
-                <option value="ASSIGNED">Atribuído</option>
-                <option value="IN_TRANSIT">Em trânsito</option>
-                <option value="DELIVERED">Entregue</option>
-                <option value="CANCELED">Cancelado</option>
+                <option value="Pendente">Pendente</option>
+                <option value="Atribuído">Atribuído</option>
+                <option value="Em Trânsito">Em Trânsito</option>
+                <option value="Entregue">Entregue</option>
+                <option value="Cancelado">Cancelado</option>
               </select>
             </label>
           </div>

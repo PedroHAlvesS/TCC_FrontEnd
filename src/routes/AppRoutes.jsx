@@ -8,12 +8,11 @@ import CustomerEditProfilePage from '../pages/customer/CustomerEditProfile.page'
 import CustomerOrderDetailsPage from '../pages/customer/CustomerOrderDetails.page';
 import DeliveryManDashboardPage from '../pages/delivery/DeliveryManDashboard.page';
 import DeliveryManOrderDetailsPage from '../pages/delivery/DeliveryManOrderDetails.page';
-import BlankPage from '../pages/BlankPage';
 import AdminDashboardPage from '../pages/admin/AdminDashboard.page';
-import OrderDetails from '../pages/OrderDetails';
+import AdminOrderDetailsPage from '../pages/admin/AdminOrderDetails.page';
 import AdminDeliveryManOrdersPage from '../pages/admin/AdminDeliveryManOrders.page';
-import Customers from '../pages/Customers';
-import CustomerOrders from '../pages/CustomerOrders';
+import AdminCustomersListPage from '../pages/admin/AdminCustomersList.page';
+import AdminCustomerOrdersPage from '../pages/admin/AdminCustomerOrders.page';
 import AdminEditProfilePage from '../pages/admin/AdminEditProfile.page';
 import AdminCreateProfilePage from '../pages/admin/AdminCreateProfile.page';
 import AdminDeliveryMenPage from '../pages/admin/AdminDeliveryMen.page';
@@ -35,6 +34,9 @@ export default function AppRoutes() {
           <Route path="/admin/create" element={<AdminCreateProfilePage />} />
           <Route path="/admin-delivery-men" element={<AdminDeliveryMenPage />} />
           <Route path="/admin-delivery-men/orders/:id" element={<AdminDeliveryManOrdersPage />} />
+          <Route path="/pedidos/:id" element={<AdminOrderDetailsPage />} />
+          <Route path="/admin-clients" element={<AdminCustomersListPage />} />
+          <Route path="/clientes/pedidos/:id" element={<AdminCustomerOrdersPage />} />
         </Route>
 
         {/* protected customer routes */}
@@ -51,18 +53,6 @@ export default function AppRoutes() {
           <Route path="/entregador/pedidos/:id" element={<DeliveryManOrderDetailsPage />} />
         </Route>
 
-        {/* protected routes */}
-        <Route element={<RequireAuth />}>
-          
-          
-          <Route path="/clientes" element={<Customers />} />
-          <Route path="/clientes/pedidos/:id" element={<CustomerOrders />} />
-          <Route path="/pedidos/:id" element={<OrderDetails />} />
-          <Route path="/admin/blank" element={<BlankPage />} />
-          
-          
-          
-        </Route>
 
         <Route path="/cliente/create" element={<CreateCustomerProfilePage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
