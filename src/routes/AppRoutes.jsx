@@ -15,7 +15,7 @@ import DeliveryManOrders from '../pages/DeliveryManOrders';
 import Customers from '../pages/Customers';
 import CustomerOrders from '../pages/CustomerOrders';
 import AdminEditProfilePage from '../pages/admin/AdminEditProfile.page';
-import CreateProfile from '../pages/CreateProfile';
+import AdminCreateProfilePage from '../pages/admin/AdminCreateProfile.page';
 import DeliveryMen from '../pages/DeliveryMen';
 import CustomerCreateOrderPage from '../pages/customer/CustomerCreateOrder.page';
 import RequireAuth from './RequireAuth';
@@ -32,6 +32,7 @@ export default function AppRoutes() {
         <Route element={<RequireAuth redirectTo="/admin" />}>
           <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
           <Route path="/admin/edit" element={<AdminEditProfilePage />} />
+          <Route path="/admin/create" element={<AdminCreateProfilePage />} />
         </Route>
 
         {/* protected customer routes */}
@@ -57,7 +58,7 @@ export default function AppRoutes() {
           <Route path="/pedidos/:id" element={<OrderDetails />} />
           <Route path="/admin/blank" element={<BlankPage />} />
           
-          <Route path="/admin/create" element={<CreateProfile />} />
+          
           
         </Route>
 

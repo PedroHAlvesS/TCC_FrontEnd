@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { clearToken } from '../services/auth';
-import Sidebar from '../components/Sidebar';
-import { createAdminProfile } from '../services/CreateAdminProfile';
-import { validateProfile } from '../utils/validators';
+import { clearToken } from '../../services/auth';
+import Sidebar from '../../components/Sidebar';
+import { createAdminProfile } from '../../services/CreateAdminProfile';
+import { validateProfile } from '../../utils/validators';
 
-export default function CreateProfile() {
+export default function AdminCreateProfilePage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -20,7 +20,7 @@ export default function CreateProfile() {
     setSaving(true);
     setErrorMessage('');
     setSuccessMessage('');
-    const { valid, errors } = validateProfile({ email, phone, password }, { requirePassword: true });
+    const { valid, errors } = validateProfile({ email, phone, password });
     if (!valid) {
       const first = errors.email || errors.phone || errors.password;
       setErrorMessage(first);
@@ -48,32 +48,9 @@ export default function CreateProfile() {
     }
   }
 
-  function handleLogout() {
-    clearToken();
-    navigate('/admin', { replace: true });
-  }
-
   return (
     <div className="page-shell dashboard-shell">
-      <Sidebar activePath="/admin/create" />
       <div className="dashboard-main">
-        <header className="dashboard-header">
-          <div>
-            <div className="dashboard-title">Criar Novo Perfil</div>
-            <div className="dashboard-subtitle">Preencha os dados abaixo para criar um novo perfil.</div>
-          </div>
-
-          <div className="profile-menu-container">
-            <button className="profile-button" onClick={handleLogout}>
-              <span className="profile-avatar">A</span>
-              <div className="profile-info">
-                <span>Admin</span>
-                <small>Administrador</small>
-              </div>
-            </button>
-          </div>
-        </header>
-
         <section className="edit-profile-card">
           {successMessage && (
             <div className="success-banner">
