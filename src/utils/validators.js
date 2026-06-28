@@ -15,14 +15,18 @@ export function isValidPassword(password) {
   return String(password).length >= 6;
 }
 
-export function validateProfile({ email, phone, password }, { requirePassword = false } = {}) {
+export function validateProfile({ email, phone, password }) {
   const errors = {};
-  if (!isValidEmail(email)) errors.email = 'E-mail inválido';
-  if (!isValidPhoneNumber(phone)) errors.phone = 'Telefone deve ter 11 dígitos numéricos';
-  if (requirePassword) {
-    if (!isValidPassword(password)) errors.password = 'Senha deve ter ao menos 6 caracteres';
-  } else if (password) {
-    // only validate if provided
+
+  if (email !== undefined && email !== null && email !== '') {
+    if (!isValidEmail(email)) errors.email = 'E-mail inválido';
+  }
+
+  if (phone !== undefined && phone !== null && phone !== '') {
+    if (!isValidPhoneNumber(phone)) errors.phone = 'Telefone deve ter 11 dígitos numéricos';
+  }
+
+  if (password !== undefined && password !== null && password !== '') {
     if (!isValidPassword(password)) errors.password = 'Senha deve ter ao menos 6 caracteres';
   }
 

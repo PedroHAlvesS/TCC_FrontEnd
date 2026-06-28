@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AdminLoginPage from '../pages/admin/AdminLogin.page';
 import CustomerLoginPage from '../pages/customer/CustomerLogin.page';
-import CreateClientProfile from '../pages/CreateClientProfile';
+import CreateCustomerProfilePage from '../pages/CreateCustomerProfile.page';
 import DeliveryManLoginPage from '../pages/delivery/DeliveryManLogin.page';
 import CustomerDashboardPage from '../pages/customer/CustomerDashboard.page';
-import ClientEditProfile from '../pages/ClientEditProfile';
+import CustomerEditProfilePage from '../pages/customer/CustomerEditProfile.page';
 import CustomerOrderDetailsPage from '../pages/customer/CustomerOrderDetails.page';
 import DeliveryManDashboardPage from '../pages/delivery/DeliveryManDashboard.page';
 import DeliveryManOrderDetailsPage from '../pages/delivery/DeliveryManOrderDetails.page';
@@ -38,6 +38,7 @@ export default function AppRoutes() {
           <Route path="/cliente-dashboard" element={<CustomerDashboardPage />} />
           <Route path="/cliente/create-pedido" element={<CustomerCreateOrderPage />} />
           <Route path="/cliente/pedidos/:id" element={<CustomerOrderDetailsPage />} />
+          <Route path="/cliente/edit" element={<CustomerEditProfilePage />} />
         </Route>
 
         {/* protected delivery man routes */}
@@ -56,12 +57,10 @@ export default function AppRoutes() {
           <Route path="/admin/blank" element={<BlankPage />} />
           <Route path="/admin/edit" element={<EditProfile />} />
           <Route path="/admin/create" element={<CreateProfile />} />
-          <Route path="/cliente/edit" element={<ClientEditProfile />} />
-          
           
         </Route>
 
-        <Route path="/cliente/create" element={<CreateClientProfile />} />
+        <Route path="/cliente/create" element={<CreateCustomerProfilePage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { clearToken, getUserEmail, setUserEmail } from '../services/auth';
-import { fetchCustomerProfile, updateCustomerProfile } from '../services/customerProfile.service';
-import { validateProfile } from '../utils/validators';
-import ProfileEditForm from '../components/ProfileEditForm';
+import { clearToken, getUserEmail, setUserEmail } from '../../services/auth';
+import { updateCustomerProfile } from '../../services/customerProfile.service';
+import { validateProfile } from '../../utils/validators';
+import ProfileEditForm from '../../components/ProfileEditForm';
 
-export default function ClientEditProfile() {
-  const [customer, setCustomer] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function CustomerEditProfilePage() {
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -18,37 +17,12 @@ export default function ClientEditProfile() {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    let mounted = true;
-
-    fetchCustomerProfile()
-      .then((data) => {
-        if (!mounted) return;
-        setCustomer(data);
-        setEmail(data.email || '');
-        setPhone(data.phoneNumber || '');
-        setPassword('');
-      })
-      .catch((err) => {
-        if (!mounted) return;
-        setError(err.message || 'Erro ao carregar perfil');
-      })
-      .finally(() => {
-        if (mounted) setLoading(false);
-      });
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
   async function handleEditProfile() {
-    if (!customer) return;
     setSaving(true);
     setErrorMessage('');
     setSuccessMessage('');
 
-    const { valid, errors } = validateProfile({ email, phone, password }, { requirePassword: false });
+    const { valid, errors } = validateProfile({ email, phone, password });
     if (!valid) {
       const first = errors.email || errors.phone || errors.password;
       setErrorMessage(first);
@@ -63,13 +37,12 @@ export default function ClientEditProfile() {
         password: password || null,
       };
 
-      const updated = await updateCustomerProfile(customer.id, payload);
-      setSuccessMessage('Alterado com sucesso');
-      if (email && email !== customer.email) {
-        setUserEmail(email);
-      }
-      setCustomer((prev) => ({ ...prev, email, phoneNumber: phone }));
-      setPassword('');
+      await updateCustomerProfile(payload);
+      setSuccessMessage('Alterado com sucesso. Você será deslogado em 2 segundos...');
+
+      window.setTimeout(() => {
+        handleLogout();
+      }, 2000);
     } catch (err) {
       setErrorMessage(err?.message || 'Erro ao salvar alterações');
     } finally {
@@ -110,16 +83,6 @@ export default function ClientEditProfile() {
           <div>
             <div className="dashboard-title">Editar Perfil</div>
             <div className="dashboard-subtitle">Atualize suas informações pessoais.</div>
-          </div>
-
-          <div className="profile-menu-container">
-            <button className="profile-button" onClick={handleLogout}>
-              <span className="profile-avatar">C</span>
-              <div className="profile-info">
-                <span>{customer.name || 'Cliente'}</span>
-                <small>Conta do cliente</small>
-              </div>
-            </button>
           </div>
         </header>
 

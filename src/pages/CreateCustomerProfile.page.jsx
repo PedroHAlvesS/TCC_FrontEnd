@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createClientProfile } from '../services/CreateClientProfile';
 import { validateProfile } from '../utils/validators';
 
-export default function CreateClientProfile() {
+export default function CreateCustomerProfilePage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');

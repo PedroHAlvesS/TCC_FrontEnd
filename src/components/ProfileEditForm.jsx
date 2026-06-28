@@ -43,11 +43,11 @@ export default function ProfileEditForm({
       <div className="edit-profile-form">
         <label>
           E-mail
-          <input type="email" value={email} onChange={(event) => onEmailChange(event.target.value)} />
+          <input type="email" value={email} onChange={(event) => onEmailChange(event.target.value)} placeholder="Digite seu novo email" />
         </label>
         <label>
           Telefone
-          <input type="text" value={phone} onChange={(event) => onPhoneChange(event.target.value)} />
+          <input type="text" value={phone} onChange={(event) => onPhoneChange(event.target.value)} placeholder="Digite seu novo telefone" />
         </label>
         <label>
           Senha

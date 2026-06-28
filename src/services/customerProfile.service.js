@@ -20,9 +20,9 @@ export async function fetchCustomerProfile() {
   return res.json().catch(() => null);
 }
 
-export async function updateCustomerProfile(customerId, profileData) {
+export async function updateCustomerProfile(profileData) {
   const token = getToken();
-  const res = await fetch(`${BACKEND_URL}/api/customers/${customerId}`, {
+  const res = await fetch(`${BACKEND_URL}/api/customers`, {
     method: 'PUT',
     headers: token
       ? {
