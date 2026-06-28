@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getUserEmail } from '../services/auth';
-import { createOrder, getCustomerByEmail } from '../services/orderService';
+import { createOrder } from '../../services/customerDashboard.service';
 
-export default function CreateOrderPage() {
+export default function CustomerCreateOrderPage() {
   const [description, setDescription] = useState('');
   const [observation, setObservation] = useState('');
   const [street, setStreet] = useState('');
@@ -29,9 +28,7 @@ export default function CreateOrderPage() {
 
     try {
       setSaving(true);
-      const customer = await getCustomerByEmail(getUserEmail());
       const payload = {
-        customerId: String(customer.id),
         description: description.trim(),
         observation: observation.trim() || null,
         address: {

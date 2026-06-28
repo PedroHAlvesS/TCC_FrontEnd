@@ -18,4 +18,23 @@ export async function fetchCustomerOrders() {
   return res.json().catch(() => null);
 }
 
-export default { fetchCustomerOrders };
+export async function createOrder(orderData) {
+  const token = getToken();
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/orders`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(orderData),
+  });
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => null);
+    throw new Error(data?.message || 'Erro ao criar pedido');
+  }
+
+  return response.json().catch(() => null);
+}
+
+export default { fetchCustomerOrders, createOrder };
